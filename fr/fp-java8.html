@@ -130,20 +130,25 @@
 					</section>
 
 					<section>
-						<h3>On peut decrire un paradigme à partir de comment il organise le code et quel est sont objectif.</h3>		
+						<h3>On peut decrire un paradigme en fonction de comment il organise le code et de sont objectif.</h3>		
 					</section>
 					<section>	
 						<p>Pour exemple la programmation <b>orientée objet</b></p>
 						<ul>
-							<li class="fragment fade-right">Organise le code en objects (data + methods)</li>
-							<li class="fragment fade-right">Cacher les détails et decrire le systeme par les interactions des objets</li>
+							<li class="fragment fade-right">Organise le code en objects (donnés + méthodes)</li>
+							<li class="fragment fade-right">Cacher l'implémentation et encapsuler l'état dans des objets</li>
 						</ul>		
 					</section>
 					<section>	
 						<p>La programmation <b>functionelle</b></p>
 						<ul>
 							<li class="fragment fade-right">Organise le code en functions</li>
-							<li class="fragment fade-right">Séparer le code pure du code impure</li>
+							<li class="fragment fade-right">Séparer le code pure (sans état) du code impure (avec état)</li>
+						</ul>
+						<p class="fragment fade-right">La programmation <b>functionelle</b> "pure"</p>
+						<ul>
+							<li class="fragment fade-right">Organise le code en functions</li>
+							<li class="fragment fade-right">Virtuellement éliminer le code impure</li>
 						</ul>		
 					</section>
 					<section>	
@@ -151,7 +156,6 @@
 						<ul>
 							<li class="fragment fade-right">Lire d'une source externe (fichiers, base de donnes, internet...)</li>
 							<li class="fragment fade-right">Écrire sur une ressource externe (logs, fichiers, base de donnes, internet...)</li>
-							<li class="fragment fade-right">Déclencher des exceptions</li>
 							<li class="fragment fade-right">Muter le valeur d'une variable</li>
 						</ul>		
 					</section>
@@ -174,11 +178,11 @@
 					</section>	
 					<section>
 						<h3>Example</h3>
-							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer x1 = reference.getX();
-Integer x2 = reference.getX();
+							<pre class="fragment fade-right"><code data-trim data-line-numbers>Integer x1 = reference.getX(param);
+Integer x2 = reference.getX(param);
 Integer sum =  x1 + x2;	
 							</code></pre>
-							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer sum = 2*reference.getX();</code></pre>
+							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer sum = 2*reference.getX(param);</code></pre>
 					</section>
 					<section>
 						<h3>Le code pure est plus facil à tester</h3>
@@ -194,30 +198,30 @@ Integer sum =  x1 + x2;
 					</section>	
 					<section>
 						<h3>Example</h3>
-							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer minOddModuloThree(List&lt;Integer&gt; list){
+							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer maxCopiesInEn(List&lt;Book&gt; books){
   Integer res = null;
-  for(Integer element : list) {
-    if(element%2 != 0) {
-      Integer temp = element%3;
-      if(res &lt; temp) {
-        res = temp;
+  for(Book book : books) {
+    if("en".equals(book.getLanguage())) {
+      Integer bookNumCopies = book.getNumCopies()
+      if(res == null || res &lt; bookNumCopies) {
+        res = bookNumCopies;
       } 
     }
   }
-  if(result == null) {
+  if(res == null) {
     throw new RuntimeException();	
   } else {
-    return result;
+    return res;
   } 
 }
 							</code></pre>
 					</section>
 					<section>
 						<p>En programmation fonctionnelle</p>
-						<pre><code class="hljs" data-trim data-line-numbers>Optional&lt;Integer&gt; minOddModuloThree(List&lt;Integer&gt; list){
-  return list.stream()
-           .filter(x -> x%2 != 0)
-           .map(x -> x%3)
+						<pre><code class="hljs" data-trim data-line-numbers>Optional&lt;Integer&gt; maxCopiesInEn(List&lt;Book&gt; books){
+  return books.stream()
+           .filter(book -> "en".equals(book.getLanguage()))
+           .map(Book::getNumCopies)
            .min((x,y) -> x &lt; y);
 }</code></pre>
 					</section>	
@@ -232,15 +236,15 @@ Integer sum =  x1 + x2;
 					</section>	
 					<section>
 						<ul>
-							<li>Ça consomme plus de mémoire et il faut utiliser un Garbage Collector</li>
+							<li>Il faut utiliser un Garbage Collector</li>
 							<li class="fragment fade-right">Pour avoir de bonnes performances il faut avoir un bon compilateur/interpreteur</li>
-							<li class="fragment fade-right">Ça brille avec une complexité et une abstraction plus élevées*</li>
-							<li class="fragment fade-right">Ça brille dans la programmation concurrente/parallèle/distribuée**</li>
-							<li class="fragment fade-right">C'est plus difficile d'écrire***</li>
+							<li class="fragment fade-right">Ça brille avec une complexité et une abstraction plus élevées</li>
+							<li class="fragment fade-right">Ça brille dans la programmation concurrente/parallèle/distribuée</li>
+							<li class="fragment fade-right">C'est plus difficile d'écrire</li>
 						</ul>
 					</section>	
 					<section>
-						<h3>Aucune de ces raisons n'est plus valable aujourd'hui</h3>			
+						<h3>Aucune de ces raisons n'est plus valable aujourd'hui</h3>
 					</section>	
 				</section>
 				<section>
@@ -265,25 +269,27 @@ Integer sum =  x1 + x2;
 							<li>Pascal</li>
 							<li>Go</li>
 						</ul>
-						<p class="fragment fade-right">Le style fonctionnel ne doit pas être utilisé dans ces languages</p>
+						<p class="fragment fade-right"><small>Le style fonctionnel ne doit pas être utilisé dans ces languages</small></p>
 					</section>		
 					<section>
 						<h3>Support secondaire</h3>			
 						<ul class="fragment fade-right">
-							<li><i>C++</i></li>
+							<li>C++</li>
 							<li>Java</li>
 							<li>C#</li>
 							<li>Smalltalk</li>
 							<li>Javascript</li>
 							<li>Python</li>
 							<li>PHP</li>
+							<li>Perl</li>
+							<li>Ruby</li>
 						</ul>
-						<p class="fragment fade-right">Le style fonctionnel peut être utilisé, mais ce n'est pas prioritaire</p>
+						<p class="fragment fade-right"><small>Le style fonctionnel peut être utilisé, mais ce n'est pas "first class citizen"</small></p>
 					</section>
 					<section>
 						<h3>Support complet</h3>			
 						<ul class="fragment fade-right">
-							<li><i>Kotlin</i></li>
+							<li>Kotlin*</li>
 							<li>Scala</li>
 							<li>F#</li>
 							<li>LISP (Scheme, Racket, Clojure...)</li>
@@ -291,7 +297,7 @@ Integer sum =  x1 + x2;
 							<li>ERLANG</li>
 							<li>Elixir</li>
 						</ul>
-						<p class="fragment fade-right">Le style fonctionnel est pleinement supporté, il est possible de programmer en style purement fonctionnel <i>purement</i> fonctionnel</p>
+						<p class="fragment fade-right"><small>Le style fonctionnel est pleinement supporté, il est possible de programmer en style purement fonctionnel</small></p>
 					</section>	
 					<section>
 						<h3>Support exclusif</h3>			
@@ -299,7 +305,7 @@ Integer sum =  x1 + x2;
 							<li><i>Elm</i></li>
 							<li>Haskell</li>
 						</ul>
-						<p class="fragment fade-right">Le style <i>purement</i> fonctionnel est le seul disponible</p>
+						<p class="fragment fade-right"><small>Le style purement fonctionnel est le seul disponible</small></p>
 					</section>	
 					<section>
 						<h3>Total functional programming/Strong functional programming</h3>			
@@ -308,7 +314,7 @@ Integer sum =  x1 + x2;
 							<li>Idris</li>
 							<li>Agda</li>
 						</ul>
-						<p class="fragment fade-right">Ces ne sont pas des langages Turing complet</p>
+						<p class="fragment fade-right"><small>Ce ne sont pas des langages Turing complet</small></p>
 					</section>		
 				</section>
 				<section>
@@ -323,8 +329,18 @@ Integer sum =  x1 + x2;
 							<li class="fragment fade-right"><b>Appel par nom</b> vs <b>initialisation lazy</b> vs <b>appeler par valeur</b></li>
 							<li class="fragment fade-right"><b>API Optional</b></li>
 							<li class="fragment fade-right"><b>API Stream</b></li>
+							<li class="fragment fade-right"><b>API Either, Try, Functional Collections, Functional Future...</b></li>
 						</ul>
-					</section>		
+					</section>
+					<section>
+						<h3>Plus loin</h3>
+						<ul>
+							<li class="fragment fade-right"><b>Recursive</b> vs <b>Tail Recursive</b> vs <b>Iterative</b></li>
+							<li class="fragment fade-right"><b>Pattern matching</b></li>
+							<li class="fragment fade-right"><b>Algebraic data types</b></li>
+							<li class="fragment fade-right"><b>Category theory</b></li>
+						</ul>
+					</section>
 				</section>
 				
 			</div>
