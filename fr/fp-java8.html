@@ -70,12 +70,12 @@
 				</section>
 
 				<section>
-					<h3>Résumé de la presentation</h3>
+					<h3>Résumé de la présentation</h3>
 					<ul>
 						<li class="fragment fade-right">Qu'est-ce que la PF ?</li>
 						<li class="fragment fade-right">Pourquoi la PF ?</li>
 						<li class="fragment fade-right">... et pourquoi maintenant ?</li>
-						<li class="fragment fade-right">Où est Java dans tu ça ?</li>
+						<li class="fragment fade-right">Où est Java dans tout ça ?</li>
 						<li class="fragment fade-right">Quoi apprendre ?</li>
 					</ul>
 				</section>
@@ -90,17 +90,17 @@
 							<li class="fragment fade-right">(&sim;1930) <b>Alonzo Church</b> introduit le <b>&lambda;-Calculus</b></li>
 							<li class="fragment fade-right">(&sim;1930) <b>Alan Turing</b> introduit la <b>Machine de Turing</b></li>
 							<li class="fragment fade-right">(&sim;1936) <b>Alonzo Church</b> et <b>Alan Turing</b> prouvent l'équivalence des deux théories</li>
-							<li class="fragment fade-right">(&sim;1940) <b>John von Neumann</b> introduit l'<b>architecture</b> des moderne ordinateurs</li>
+							<li class="fragment fade-right">(&sim;1940) <b>John von Neumann</b> introduit l'<b>architecture</b> des ordinateurs modernes </li>
 						</ul>		
 					</section>
 					<section>
 						<h3>Les paradigmes de programmation</h3>
 						<div class="row">
   							<div class="column">
-    							<b class="fragment fade-right">Imperative</b>
+    							<b class="fragment fade-right">Impérative</b>
     							</div>
   							<div class="column">
-    							<b class="fragment fade-left">Declarative</b>
+    							<b class="fragment fade-left">Déclarative</b>
     						</div>
 						</div>
 						<div class="row">
@@ -124,39 +124,39 @@
 						</div>
 						<p class="fragment fade-right">
 							<small>							
-								La programmation <b>impérative</b> descend de la <b>machine de Turing</b>, alors que la programmation <b>fonctionnelle</b> à partir du <b>&lambda;-Calculus</b>
+								La programmation <b>impérative</b> descend de la <b>machine de Turing</b> tandis que la programmation <b>fonctionnelle</b> descend du <b>&lambda;-Calculus</b>
 							</small>						
 						</p>
 					</section>
 
 					<section>
-						<h3>On peut decrire un paradigme en fonction de comment il organise le code et de sont objectif.</h3>		
+						<h3>On peut décrire un paradigme en fonction de l'organisation de son code et de son objectif </h3>
 					</section>
 					<section>	
-						<p>Pour exemple la programmation <b>orientée objet</b></p>
+						<p>Pour exemple : la programmation <b>orientée objet</b></p>
 						<ul>
-							<li class="fragment fade-right">Organise le code en objects (donnés + méthodes)</li>
-							<li class="fragment fade-right">Cacher l'implémentation et encapsuler l'état dans des objets</li>
+							<li class="fragment fade-right">Organise le code en objets (donnés + méthodes)</li>
+							<li class="fragment fade-right">Cache l'implémentation et encapsule l'état dans des objets</li>
 						</ul>		
 					</section>
 					<section>	
-						<p>La programmation <b>functionelle</b></p>
+						<p>La programmation <b>fonctionnelle</b></p>
 						<ul>
-							<li class="fragment fade-right">Organise le code en functions</li>
-							<li class="fragment fade-right">Séparer le code pure (sans état) du code impure (avec état)</li>
+							<li class="fragment fade-right">Organise le code en fonctions</li>
+							<li class="fragment fade-right">Sépare le code pur (sans état) du code impur (avec état)</li>
 						</ul>
-						<p class="fragment fade-right">La programmation <b>functionelle</b> "pure"</p>
+						<p class="fragment fade-right">La programmation <b>fonctionnelle</b> "pure"</p>
 						<ul>
-							<li class="fragment fade-right">Organise le code en functions</li>
-							<li class="fragment fade-right">Virtuellement éliminer le code impure</li>
+							<li class="fragment fade-right">Organise le code en fonctions</li>
+							<li class="fragment fade-right">Élimine virtuellement le code impure</li>
 						</ul>		
 					</section>
 					<section>	
 						<p>Les actions impures sont :</p>
 						<ul>
-							<li class="fragment fade-right">Lire d'une source externe (fichiers, base de donnes, internet...)</li>
-							<li class="fragment fade-right">Écrire sur une ressource externe (logs, fichiers, base de donnes, internet...)</li>
-							<li class="fragment fade-right">Muter le valeur d'une variable</li>
+							<li class="fragment fade-right">La lecture d'une source d'une source externe (fichiers, base de données, internet...)</li>
+							<li class="fragment fade-right">L'écriture sur une ressource externe (logs, fichiers, base de donnes, internet...)</li>
+							<li class="fragment fade-right">La mutation de la valeur d'une variable</li>
 						</ul>		
 					</section>
 				</section>
@@ -167,7 +167,7 @@
 					<section>
 						<h3>La programmation concurrente/parallèle/distribuée est plus facile</h3>
 						<p class="fragment fade-right">
-							Sans états mutables, pas besoin de blocs de synchronisation et les fonctions pures sont bien adaptées pour décrire des tâches à exécuter en parallèle.						
+							Sans états mutables, pas besoin de blocs de synchronisation de sorte que les fonctions pures sont bien adaptées pour décrire des tâches à exécuter en parallèle.
 						</p>
 					</section>
 					<section>
@@ -177,7 +177,7 @@
 						</small>
 					</section>	
 					<section>
-						<h3>Example</h3>
+						<h3>Exemple</h3>
 							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer x1 = reference.getX(param);
 Integer x2 = reference.getX(param);
 Integer sum =  x1 + x2;	
@@ -185,15 +185,15 @@ Integer sum =  x1 + x2;
 							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer sum = 2*reference.getX(param);</code></pre>
 					</section>
 					<section>
-						<h3>Le code pure est plus facil à tester</h3>
+						<h3>Le code pur est plus facile à tester</h3>
 						<p class="fragment fade-right">
-							Sans dépendances externes et états mutables, pas besoin des mocks et les tests sont plus fiables.
+							Sans dépendances externes et états mutables les tests sont plus fiables.
 						</p>	
 					</section>
 					<section>
-						<h3>Si statiquement et fortement typé, le code est plus expressive plus facil à lire et avec mois des bugs</h3>
+						<h3>Le code est plus expressif, plus facile à lire et comporte moins de bugs</h3>
 						<p class="fragment fade-right">
-							Dans un language fonctionnelle statiquement et fortement typé, un peut exprimer les contraintes directement dans les types.
+							Dans un langage fonctionnelle statiquement et fortement typé, un peut exprimer les contraintes directement dans les types.
 						</p>
 					</section>	
 					<section>
@@ -230,17 +230,17 @@ Integer sum =  x1 + x2;
 				<section>	
 					<section>
 						<h2>... et pourquoi maintenant ?</h2>
-						<small class="fragment fade-right">							
-							Si c'est si bon pourquoi on ne l'a pas utilisé avant ?
+						<small class="fragment fade-right">
+							Si la programmation fonctionnelle est bonne, pourquoi ne pas l'avoir utilisé avant ?
 						</small>
 					</section>	
 					<section>
 						<ul>
 							<li>Il faut utiliser un Garbage Collector</li>
-							<li class="fragment fade-right">Pour avoir de bonnes performances il faut avoir un bon compilateur/interpreteur</li>
-							<li class="fragment fade-right">Ça brille avec une complexité et une abstraction plus élevées</li>
-							<li class="fragment fade-right">Ça brille dans la programmation concurrente/parallèle/distribuée</li>
-							<li class="fragment fade-right">C'est plus difficile d'écrire</li>
+							<li class="fragment fade-right">Pour avoir de bonnes performances il faut avoir un bon compilateur/interpréteur</li>
+							<li class="fragment fade-right">Elle brille  avec une complexité et une abstraction plus élevées</li>
+							<li class="fragment fade-right">Elle brille  dans la programmation concurrente/parallèle/distribuée</li>
+							<li class="fragment fade-right">Elle est plus difficile à écrire</li>
 						</ul>
 					</section>	
 					<section>
@@ -249,14 +249,14 @@ Integer sum =  x1 + x2;
 				</section>
 				<section>
 					<section>
-						<h2>Où est Java dans tu ça ?</h2>			
+						<h2>Où est Java dans tout ça ?</h2>
 					</section>
 					<section>
 						<h3>Support d'un paradigme</h3>			
 						<ul>
-							<li class="fragment fade-right">Niveau : semantique</li>
+							<li class="fragment fade-right">Niveau : sémantique</li>
 							<li class="fragment fade-right">Niveau : syntactique</li>
-							<li class="fragment fade-right">Niveau : libraries standard</li>
+							<li class="fragment fade-right">Niveau : librairies standards</li>
 						</ul>
 					</section>
 					<section>
@@ -269,7 +269,7 @@ Integer sum =  x1 + x2;
 							<li>Pascal</li>
 							<li>Go</li>
 						</ul>
-						<p class="fragment fade-right"><small>Le style fonctionnel ne doit pas être utilisé dans ces languages</small></p>
+						<p class="fragment fade-right"><small>Le style fonctionnel ne doit pas être utilisé dans ces langages</small></p>
 					</section>		
 					<section>
 						<h3>Support secondaire</h3>			
@@ -284,7 +284,7 @@ Integer sum =  x1 + x2;
 							<li>Perl</li>
 							<li>Ruby</li>
 						</ul>
-						<p class="fragment fade-right"><small>Le style fonctionnel peut être utilisé, mais ce n'est pas "first class citizen"</small></p>
+						<p class="fragment fade-right"><small>Le style fonctionnel peut être utilisé mais n'est pas "first class citizen"</small></p>
 					</section>
 					<section>
 						<h3>Support complet</h3>			
@@ -326,19 +326,10 @@ Integer sum =  x1 + x2;
 							<li><b>Pure</b> vs <b>Impure</b></li>
 							<li class="fragment fade-right"><b>Immutabilité</b> vs <b>mutabilité</b></li>
 							<li class="fragment fade-right"><b>Expressions-&lambda;</b> vs <b>objets anonymes</b></li>
-							<li class="fragment fade-right"><b>Appel par nom</b> vs <b>initialisation lazy</b> vs <b>appeler par valeur</b></li>
+							<li class="fragment fade-right"><b>Appel par nom</b> vs <b>initialisation lazy</b> vs <b>appel par valeur</b></li>
 							<li class="fragment fade-right"><b>API Optional</b></li>
 							<li class="fragment fade-right"><b>API Stream</b></li>
 							<li class="fragment fade-right"><b>API Either, Try, Functional Collections, Functional Future...</b></li>
-						</ul>
-					</section>
-					<section>
-						<h3>Plus loin</h3>
-						<ul>
-							<li class="fragment fade-right"><b>Recursive</b> vs <b>Tail Recursive</b> vs <b>Iterative</b></li>
-							<li class="fragment fade-right"><b>Pattern matching</b></li>
-							<li class="fragment fade-right"><b>Algebraic data types</b></li>
-							<li class="fragment fade-right"><b>Category theory</b></li>
 						</ul>
 					</section>
 				</section>
