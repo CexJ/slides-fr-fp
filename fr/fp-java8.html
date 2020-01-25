@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Functional programming for the working Javaist (FR)</title>
+		<title>Au-delà du lambda</title>
 
 		<meta name="description" content="Présentation de la programmation fonctionnelle pour les développeurs Java">
 		<meta name="author" content="Andrea Cesaro">
@@ -149,11 +149,6 @@
 							<li class="fragment fade-right">Organise le code en fonctions</li>
 							<li class="fragment fade-right">Sépare le code pur (sans état) du code impur (avec état)</li>
 						</ul>
-						<p class="fragment fade-right">La programmation <b>fonctionnelle</b> "pure"</p>
-						<ul>
-							<li class="fragment fade-right">Organise le code en fonctions</li>
-							<li class="fragment fade-right">Élimine virtuellement le code impure</li>
-						</ul>		
 					</section>
 					<section>	
 						<p>Les actions impures sont :</p>
@@ -234,7 +229,8 @@ Integer sum =  x1 + x2;
            .filter(book -> "en".equals(book.getLanguage()))
            .map(Book::getNumCopies)
            .max((x,y) -> x &lt; y);
-}</code></pre>
+}
+						</code></pre>
 					</section>	
 				</section>
 				
@@ -260,7 +256,7 @@ Integer sum =  x1 + x2;
 				</section>
 				<section>
 					<section>
-						<h2>Où est Java dans tout ça ?</h2>
+						<h2>Où sont les langages dans tout ça ?</h2>
 					</section>
 					<section>
 						<h3>Support d'un paradigme</h3>			
@@ -280,8 +276,7 @@ Integer sum =  x1 + x2;
 							<li>Pascal</li>
 							<li>Go</li>
 						</ul>
-						<p class="fragment fade-right"><small>Le style fonctionnel ne doit pas être utilisé dans ces langages</small></p>
-					</section>		
+					</section>
 					<section>
 						<h3>Support secondaire</h3>			
 						<ul class="fragment fade-right">
@@ -295,38 +290,31 @@ Integer sum =  x1 + x2;
 							<li>Perl</li>
 							<li>Ruby</li>
 						</ul>
-						<p class="fragment fade-right"><small>Le style fonctionnel peut être utilisé mais n'est pas "first class citizen"</small></p>
 					</section>
 					<section>
 						<h3>Support complet</h3>			
 						<ul class="fragment fade-right">
-							<li>Kotlin*</li>
-							<li>Scala</li>
-							<li>F#</li>
+							<li>Kotlin*, Scala</li>
 							<li>LISP (Scheme, Racket, Clojure...)</li>
-							<li>ML (OCaml, ReasonMl...)</li>
-							<li>ERLANG</li>
-							<li>Elixir</li>
+							<li>ML (F#, OCaml, ReasonML...)</li>
+							<li>ERLANG, Elixir</li>
 						</ul>
-						<p class="fragment fade-right"><small>Le style fonctionnel est pleinement supporté, il est possible de programmer en style purement fonctionnel</small></p>
-					</section>	
+					</section>
 					<section>
 						<h3>Support exclusif</h3>			
 						<ul class="fragment fade-right">
 							<li><i>Elm</i></li>
 							<li>Haskell</li>
 						</ul>
-						<p class="fragment fade-right"><small>Le style purement fonctionnel est le seul disponible</small></p>
-					</section>	
+					</section>
 					<section>
-						<h3>Total functional programming/Strong functional programming</h3>			
+						<h3>Total functional programming / Strong functional programming</h3>
 						<ul class="fragment fade-right">
 							<li>Cocq</li>
 							<li>Idris</li>
 							<li>Agda</li>
 						</ul>
-						<p class="fragment fade-right"><small>Ce ne sont pas des langages Turing complet</small></p>
-					</section>		
+					</section>
 				</section>
 				<section>
 					<section>
@@ -338,9 +326,7 @@ Integer sum =  x1 + x2;
 							<li class="fragment fade-right"><b>Immutabilité</b> vs <b>mutabilité</b></li>
 							<li class="fragment fade-right"><b>Expressions-&lambda;</b> vs <b>objets anonymes</b></li>
 							<li class="fragment fade-right"><b>Appel par nom</b> vs <b>initialisation lazy</b> vs <b>appel par valeur</b></li>
-							<li class="fragment fade-right"><b>API Optional</b></li>
-							<li class="fragment fade-right"><b>API Stream</b></li>
-							<li class="fragment fade-right"><b>API Either, Try, Functional Collections, Functional Future...</b></li>
+							<li class="fragment fade-right"><b>APIs Functionals</b></li>
 						</ul>
 					</section>
 				</section>
