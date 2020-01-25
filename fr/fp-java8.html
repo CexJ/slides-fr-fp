@@ -159,13 +159,20 @@
 							<li class="fragment fade-right">La mutation de la valeur d'une variable</li>
 						</ul>		
 					</section>
+					<section>
+						<p class="fragment fade-right">La programmation <b>fonctionnelle</b> "pure"</p>
+						<ul>
+							<li class="fragment fade-right">Organise le code en fonctions</li>
+							<li class="fragment fade-right">Élimine virtuellement le code impure</li>
+						</ul>
+					</section>
 				</section>
 				<section>	
 					<section>
 						<h2>Pourquoi la programmation fonctionnelle ?</h2>
 					</section>	
 					<section>
-						<h3>La programmation concurrente/parallèle/distribuée est plus facile</h3>
+						<h3>La programmation concurrente / parallèle / distribuée est plus facile</h3>
 						<p class="fragment fade-right">
 							Sans états mutables, pas besoin de blocs de synchronisation de sorte que les fonctions pures sont bien adaptées pour décrire des tâches à exécuter en parallèle.
 						</p>
@@ -197,7 +204,7 @@ Integer sum =  x1 + x2;
 						</p>
 					</section>	
 					<section>
-						<h3>Example</h3>
+						<h3>Exemple</h3>
 							<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer maxCopiesInEn(List&lt;Book&gt; books){
   Integer res = null;
   for(Book book : books) {
@@ -222,7 +229,7 @@ Integer sum =  x1 + x2;
   return books.stream()
            .filter(book -> "en".equals(book.getLanguage()))
            .map(Book::getNumCopies)
-           .min((x,y) -> x &lt; y);
+           .max((x,y) -> x &lt; y);
 }</code></pre>
 					</section>	
 				</section>
@@ -239,7 +246,7 @@ Integer sum =  x1 + x2;
 							<li>Il faut utiliser un Garbage Collector</li>
 							<li class="fragment fade-right">Pour avoir de bonnes performances il faut avoir un bon compilateur/interpréteur</li>
 							<li class="fragment fade-right">Elle brille  avec une complexité et une abstraction plus élevées</li>
-							<li class="fragment fade-right">Elle brille  dans la programmation concurrente/parallèle/distribuée</li>
+							<li class="fragment fade-right">Elle brille  dans la programmation concurrente / parallèle / distribuée</li>
 							<li class="fragment fade-right">Elle est plus difficile à écrire</li>
 						</ul>
 					</section>	
