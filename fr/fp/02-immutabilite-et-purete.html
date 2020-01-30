@@ -168,7 +168,45 @@ while(mutableCondiction){
 					</section>
 					<section>
 						<h3>Dans les structures de données</h3>
-						<p class="fragment fade-right"></p>
+						<p class="fragment fade-right">Rendre un objet immutable c'est difficile</p>
+						<p class="fragment fade-right">Copier simplement une grande collection peut être très lourd</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Immuabilité pragmatique</h2>
+					</section>
+					<section>
+						<h3>Dans une boucle</h3>
+						<p class="fragment fade-right">Utiliser des variables temporaires pour les mutations, dans la plus petite scope possible</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+...
+Integer maxNumPageTemp = 0;
+for(Book book:books){
+ if(book.getNumPage() &gt; maxNumPageTemp){
+  maxNumPageTemp = book.getNumPage();
+ }
+}
+Integer maxNumPage = maxNumPageTemp;
+...
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+...
+Integer maxNumPage = extractMaxNumPage(books);
+...
+						</code></pre>
+					</section>
+					<section>
+						<h3>Si possible utiliser des API fonctionnelles</h3>
+						<p class="fragment fade-right">Ils cachent l'implémentation mutable et ils donnent des interfaces trés flexibles</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+...
+Integer maxNumPage = books.stream()
+                          .map(Book::getNumPage)
+                          .max((x,y) -> x < y)
+                          .orElse(0);
+...
+						</code></pre>
 					</section>
 				</section>
 
