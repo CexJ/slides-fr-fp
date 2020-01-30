@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Au-delà du lambda</title>
+		<title>Propre à la Vérité à l'orbe pur</title>
 
 		<meta name="description" content="Immuabilité et pureté dans la programmation fonctionnelle">
 		<meta name="author" content="Andrea Cesaro">
@@ -197,7 +197,7 @@ Integer maxNumPage = extractMaxNumPage(books);
 						</code></pre>
 					</section>
 					<section>
-						<h3>Si possible utiliser des API fonctionnelles</h3>
+						<h2>Si possible utiliser des API fonctionnelles</h2>
 						<p class="fragment fade-right">Ils cachent l'implémentation mutable et ils donnent des interfaces trés flexibles</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 ...
@@ -208,8 +208,112 @@ Integer maxNumPage = books.stream()
 ...
 						</code></pre>
 					</section>
+					<section>
+						<h3>Dans le cas d'un objet (Java/C#)</h3>
+						<ul>
+							<li class="fragment fade-right">Definir les champs comment <b>private</b> et <b>final</b></li>
+							<li class="fragment fade-right">Ne definir pas des methodes <b>set</b></li>
+							<li class="fragment fade-right">Definir la classe comment <b>final</b></li>
+							<li class="fragment fade-right">Copie défensive entrée et sortie</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Dans le cas d'une collection</h3>
+						<ul>
+							<li class="fragment fade-right">Il exist des versions de collections immutables, elles ont des propriétés différentes des collections mutables
+								<p class="fragment fade-right">Les logiciels de gestion de versions, comme <b>git</b> sont des collections immutables</p></li>
+							<li class="fragment fade-right">La strategie d'evaluations des expressions-&lambda; peut etre utilisé pour optimiser le code (graphe orienté acyclique)
+								<p class="fragment fade-right">Les <b>Stream</b> en Java pour exemple</p></li>
+						</ul>
+					</section>
 				</section>
 
+				<section>
+					<section>
+						<h2>Immuabilité dans la programmation fonctionnelle</h2>
+					</section>
+					<section>
+						<h3>Un peu plus d'histoire</h3>
+						<ul>
+							<li class="fragment fade-right">(&sim;1930) <b>Alonzo Church</b> introduit le <b>&lambda;-Calculus</b></li>
+							<li class="fragment fade-right">(&sim;1930) <b>Alan Turing</b> introduit la <b>Machine de Turing</b></li>
+							<li class="fragment fade-right">(&sim;1930) <b>Kurt Gödel</b> et <b>Jacques Herbrand</b> introduit le <b>functions &mu;-recursives</b></li>
+							<li class="fragment fade-right">(&sim;1936) <b>Alonzo Church</b> et <b>Alan Turing</b> prouvent l'équivalence des trois théories</li>
+
+						</ul>
+					</section>
+					<section>
+						<h3>La recursion peut étre utilisé au lieu des boucles</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Integer factorial(Integer n){
+ Integer result=1;
+ if(n&gt;1){
+  for(int i=1;i<=n;i++){
+   result=result*i;
+  }
+ }
+ return result;
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Integer factorial(Integer n){
+ if(n&gt;1) return n*factorial(n-1);
+ else return 1;
+}
+						</code></pre>
+					</section>
+					<section>
+						<h3>Quel est le problème de la recursion ?</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Integer infinite(){
+ if(true) return infinite();
+ else return 0;
+}
+						</code></pre>
+						<p class="fragment fade-right" style="color: red">Exception in thread "main" java.lang.StackOverflowError</p>
+					</section>
+					<section>
+						<h3>Tail recursion</h3>
+						<p class="fragment fade-right">Chaque fonction récursive peut étre transformé dans une forme dit <b>tail recursive</b></p>
+						<p class="fragment fade-right">Les ccompilateurs / interpréteurs des langages fonctionnelles implémentent la <b>tail recursive optimisation</b></p>
+					</section>
+					<section>
+						<h3>Immutabilité</h3>
+						<p class="fragment fade-right">Par default ou tres simple à realiser</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+case class Book(title: String, pageNumber: Int = 0){
+ def desc(): String = s"The book $book has $pageNumber pages"
+}
+						</code></pre>
+						<p class="fragment fade-right">Il permet d'avoir du <b>filtrage par motif</b> (<b>pattern matching</b>)</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>La pureté</h2>
+					</section>
+					<section>
+						<h3>Exemple</h3>
+						<div class="fragment fade-right">
+							<p>Architecture en couches</p>
+							<img src="img/3tiers.png" alt="Down arrow" style="border:0px">
+						</div>
+					</section>
+					<section>
+						<h3>Exemple</h3>
+						<div class="fragment fade-right">
+							<p>Séparation pur / impur</p>
+							<img src="img/3pure.png" alt="Down arrow"  style="border:0px">
+						</div>
+					</section>
+					<section>
+						<h3>Exemple</h3>
+						<div class="fragment fade-right">
+							<p>"Architecture" centré sur la logique</p>
+							<img src="img/6pure.png" alt="Down arrow"  style="border:0px">
+						</div>
+					</section>
+				</section>
 				<section>
 					<div class="row">
 						<div class="column">
