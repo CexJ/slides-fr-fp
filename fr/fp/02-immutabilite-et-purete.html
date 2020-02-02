@@ -98,17 +98,18 @@
 					</section>					
 					<section>
 						<h3>Simplicité dans le raisonnement</h3>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Page page = repo.getPageById(id);
+						<pre class="fragment fade-right"><code class="hljs" data-trim>final Page page = repo.getPageById(id);
 ...
-Integer numLines =  page.getNumLines();
-
+final Integer numLines =  page.getNumLines();
+...
+final Paragraph firstParagraph =  page.getParagraph(0);
 							</code></pre>
 					</section>
 					<section>
 						<h3>Simplicité dans le partage entre procedures</h3>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Page page = repo.getPageById(id);
+						<pre class="fragment fade-right"><code class="hljs" data-trim>final Page page = repo.getPageById(id);
 ...
-Page engPage = GoogleTranslateUtils.translate(page);
+final Page engPage = GoogleTranslateUtils.translate(page);
 							</code></pre>
 					</section>
 					<section>
@@ -124,20 +125,37 @@ Page engPage = GoogleTranslateUtils.translate(page);
 						<h3>Dans une procédure linéaire</h3>
 						<p class="fragment fade-right">Une nouvelle valeur est créée à chaque étape</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
-Book correctWord(Book oldBook, Integer index,
-                 Word oldWord, Word newWord){
- Page oldPage = oldBook.getPageByIndex(index);
- Page newPage = oldPage.changeWord(oldWord,newWord);
- Book newBook = oldBook.changePageAtIndex(newPage,index);
+Book correctWord(final Book oldBook, final Integer index,
+                 final Word oldWord, final Word newWord){
+ final Page oldPage = oldBook.getPageByIndex(index);
+ final Page newPage = oldPage.changeWord(oldWord,newWord);
+ final Book newBook = oldBook.changePageAtIndex(newPage,index);
  return newBook;
 }
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
-Book correctWord(Book oldBook, Integer index,
-                 Word oldWord, Word newWord){
+Book correctWord(final Book oldBook, final Integer index,
+                 final Word oldWord, final Word newWord){
   return oldBook.getPageByIndex(index)
                 .changeWord(oldWord,newWord)
                 .changePageAtIndex(newPage,index);
+}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code class="hljs" data-trim>
+Book correctWord(final Book oldBook, final Integer index,
+                 final Word oldWord, final Word newWord){
+ final Page oldPage = pageByIndex(oldBook,index);
+ final Page newPage = changeWord(oldPage,oldWord,newWord);
+ final Book newBook = changePageAtIndex(oldBook,newPage,index);
+ return newBook;
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Book correctWord(final Book oldBook, final Integer index,
+                 final Word oldWord, final Word newWord){
+  return changePageAtIndex(oldBook,changeWord(pageByIndex(oldBook,index),oldWord,newWord),index);
 }
 						</code></pre>
 					</section>
@@ -187,12 +205,12 @@ for(Book book:books){
   maxNumPageTemp = book.getNumPage();
  }
 }
-Integer maxNumPage = maxNumPageTemp;
+final Integer maxNumPage = maxNumPageTemp;
 ...
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 ...
-Integer maxNumPage = extractMaxNumPage(books);
+final Integer maxNumPage = extractMaxNumPage(books);
 ...
 						</code></pre>
 					</section>
@@ -201,29 +219,30 @@ Integer maxNumPage = extractMaxNumPage(books);
 						<p class="fragment fade-right">Ils cachent l'implémentation mutable et ils donnent des interfaces trés flexibles</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 ...
-Integer maxNumPage = books.stream()
-                          .map(Book::getNumPage)
+final Integer maxNumPage = books.stream()
+                          .map(b -> b.getNumPage())
                           .max((x,y) -> x < y)
                           .orElse(0);
 ...
 						</code></pre>
 					</section>
 					<section>
-						<h3>Dans le cas d'un objet (Java/C#)</h3>
+						<h3>Dans le cas d'un objet (Java / C#)</h3>
 						<ul>
 							<li class="fragment fade-right">Definir les champs comment <b>private</b> et <b>final</b></li>
 							<li class="fragment fade-right">Ne definir pas des methodes <b>set</b></li>
 							<li class="fragment fade-right">Definir la classe comment <b>final</b></li>
-							<li class="fragment fade-right">Copie défensive entrée et sortie</li>
+							<li class="fragment fade-right">Copie défensive en <b>entrée</b> et <b>sortie</b></li>
+							<li class="fragment fade-right">Utiliser le pattern <b>builder</b></li>
 						</ul>
 					</section>
 					<section>
 						<h3>Dans le cas d'une collection</h3>
 						<ul>
-							<li class="fragment fade-right">Il exist des versions de collections immutables, elles ont des propriétés différentes des collections mutables
-								<p class="fragment fade-right">Les logiciels de gestion de versions, comme <b>git</b> sont des collections immutables</p></li>
-							<li class="fragment fade-right">La strategie d'evaluations des expressions-&lambda; peut etre utilisé pour optimiser le code (graphe orienté acyclique)
-								<p class="fragment fade-right">Les <b>Stream</b> en Java pour exemple</p></li>
+							<li class="fragment fade-right">Il exist des versions de collections immutables
+								<p class="fragment fade-right">Les logiciels de gestion de versions, comme <b>git</b>, sont des collections immutables</p></li>
+							<li class="fragment fade-right">La strategie d'evaluations des expressions-<b>&lambda;</b> peut etre utilisé pour optimiser le code (graphe orienté acyclique)
+								<p class="fragment fade-right">Les <b>Stream</b> en <b>Java</b> ou les <b>RDD</b> en <b>Spark</b> pour exemple</p></li>
 						</ul>
 					</section>
 				</section>
@@ -237,7 +256,7 @@ Integer maxNumPage = books.stream()
 						<ul>
 							<li class="fragment fade-right">(&sim;1930) <b>Alonzo Church</b> introduit le <b>&lambda;-Calculus</b></li>
 							<li class="fragment fade-right">(&sim;1930) <b>Alan Turing</b> introduit la <b>Machine de Turing</b></li>
-							<li class="fragment fade-right">(&sim;1930) <b>Kurt Gödel</b> et <b>Jacques Herbrand</b> introduit le <b>functions &mu;-recursives</b></li>
+							<li class="fragment fade-right">(&sim;1930) <b>Kurt Gödel</b> et <b>Jacques Herbrand</b> introduit le <b>fonctions &mu;-recursives</b></li>
 							<li class="fragment fade-right">(&sim;1936) <b>Alonzo Church</b> et <b>Alan Turing</b> prouvent l'équivalence des trois théories</li>
 
 						</ul>
@@ -256,9 +275,9 @@ Integer factorial(Integer n){
 }
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
-Integer factorial(Integer n){
+Integer factorial(final Integer n){
  if(n&gt;1) return n*factorial(n-1);
- else return 1;
+ else    return 1;
 }
 						</code></pre>
 					</section>
@@ -267,7 +286,7 @@ Integer factorial(Integer n){
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 Integer infinite(){
  if(true) return infinite();
- else return 0;
+ else     return 0;
 }
 						</code></pre>
 						<p class="fragment fade-right" style="color: red">Exception in thread "main" java.lang.StackOverflowError</p>
@@ -309,7 +328,7 @@ case class Book(title: String, pageNumber: Int = 0){
 					<section>
 						<h3>Exemple</h3>
 						<div class="fragment fade-right">
-							<p>"Architecture" centré sur la logique</p>
+							<p>Modèle central</p>
 							<img src="img/6pure.png" alt="Down arrow"  style="border:0px">
 						</div>
 					</section>
