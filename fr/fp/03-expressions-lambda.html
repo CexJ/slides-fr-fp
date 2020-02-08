@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Je n'ai jamais rien fait d'utile.</title>
+
+		<meta name="description" content="Il peut en effet y avoir d'autres applications du système que son utilisation comme logique.">
+		<meta name="author" content="Andrea Cesaro">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="../../css/reset.css">
+		<link rel="stylesheet" href="../../css/reveal.css">
+		<link rel="stylesheet" href="../../css/theme/sky.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/css/zenburn.css">
+
+		<style>
+			* {
+  				box-sizing: border-box;
+			}
+
+			/* Create two equal columns that floats next to each other */
+			.column {
+  				float: left;
+  				width: 50%;
+  				padding: 10px;
+			}
+
+			/* Clear floats after the columns */
+			.row:after {
+  				content: "";
+  				display: table;
+  				clear: both;
+			}
+
+			div.lowercase {
+  				text-transform: lowercase;
+			}
+
+			.vertical-center {
+  				margin: 0;
+  				position: absolute;
+  				top: 50%;
+  				-ms-transform: translateY(-50%);
+			  	transform: translateY(-50%);
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>"Je n'ai jamais rien fait d'utile"</h2>
+					<h5>Expressions-&lambda; dans la programmation fonctionnelle</h5>
+					<p>
+						<small>Auteur <a href="http://cexj.github.io">Andrea Cesaro</a>, powered by: <a href="https://github.com/hakimel/reveal.js/">Reveal.js</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h3>Résumé de la présentation</h3>
+					<ul>
+						<li class="fragment fade-right">Qu'est-ce qu'une expression-&lambda; ?</li>
+						<li class="fragment fade-right">Comment sont-elles implementé ?</li>
+						<li class="fragment fade-right">Stratégies d'évaluation</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Qu'est-ce qu'une expression-&lambda; ?</h2>
+					</section>					
+					<section>
+						<h3>Briser le mur entre valeurs et fonctions</h3>
+						<p  class="fragment fade-right">Nous sommes habitués à attribuer des valeurs aux variables et l'utiliser plus tard.</p>
+						<p  class="fragment fade-right">Les variables peuvent être utilisées pour paramétrer les calculs.</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Page page = repo.getPageById(id);
+...
+Integer index =  indexComputation(param);
+...
+Paragraph paragraph =  page.getParagraph(index);
+							</code></pre>
+					</section>
+					<section>
+						<p>L'idée des expressions lambda est d'assigner un calcul à une variable pour l'exécuter plus tard</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Page page = repo.getPageById(id);
+Function&lt;String,Integer&gt; wordCnt = l -&gt; l.split(" ").length;
+...
+String line = page.getLine(index);
+Integer wordNumber = wordCounter.apply(line);
+							</code></pre>
+					</section>
+					<section>
+						<p>Les variables peuvent être utilisées pour paramétrer les calculs.</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Boolean checkGrammar(Page page,
+                     Function&lt;String, Boolean&gt; lineChecker){
+ for(String line : page.getLines()){
+  if(! lineCheck.apply(line)){
+   return false;
+  }
+ }
+ return true;
+}
+							</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Function&lt;String, Boolean&gt; noZeroChecker = s -&gt; ! s.contains("0");
+Boolean noZero = checkGrammar(page, noZeroChecker);
+							</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Boolean noZero = checkGrammar(page, s -&gt; ! s.contains("0"));
+							</code></pre>
+						<p class="fragment fade-right">Pour des raisons techniques, les variables capturé doivent être "effectivement finales".</p>
+					</section>
+					<section>
+						<h3>Lexical closures</h3>
+						<p class="fragment fade-right">Les calculs sont exécutés dans un environnement.</p>
+						<p class="fragment fade-right">Les expressions-&lambda; peuvent capturer des variables.</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+String forbiddenWord = getTabooWord(language);
+Boolean noForbiddenWord =
+  checkGrammar(page, s -&gt; ! s.contains(forbiddenWord));
+							</code></pre>
+					</section>
+					<section>
+						<p>Lorsque nous utilisons des expressions-&lambda;, les exceptions peuvent être problématiques et leur utilisation n'est pas suggérée</p>
+						<p class="fragment fade-right">Certaines API fonctionnelles peuvent être utilisées pour résoudre ce problème (Optional / Option / Maybe, Either, Try)</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Comment sont-elles implementé ?</h2>
+					</section>
+					<section>
+						<h3>Objets anonymes</h3>
+						<p class="fragment fade-right">Dans la programmation-OO, nous avons le concept d'objets anonymes</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Interface Button{
+ Boolean isClicked();
+ void onClick();
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Button button = new Button(){
+ boolean clicked = false;
+ Boolean isClicked(){
+  return clicked;
+ }
+ void onClick(){
+  System.out.println("Hello world");
+  clicked = true;
+ }
+}
+						</code></pre>
+					</section>
+					<section>
+						<h3>Fonctiones anonymes</h3>
+						<p class="fragment fade-right">Dans Java et C#, les expressions-&lambda; ne sont que du sucre de syntaxe pour un objet anonyme avec une seule méthode</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Interface MyLambdaType{
+ Integer doSomething(String param);
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+MyLambdaType myLambda = p -> p.length();
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Exemples (Java)</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Function&lt;X, Y&gt; : x -&gt; y</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>BiFunction&lt;X,Y,Z&gt; : (x,y) -&gt; z</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Predicate&lt;X&gt; : x -&gt; true</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Supplier&lt;X&gt; : () -> x</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Consumer&lt;X&gt; : x -> ()</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Stratégies d'évaluation</h2>
+					</section>
+					<section>
+						<h3>Call by value</h3>
+						<p class="fragment fade-right">Habituellement, lorsque nous appelons une fonction \(f\) avec paramètre le résultat d'une autre fonction \(g\), la fonction \(g\) est évaluée et son résultat est transmis à la fonction \(f\)</p>
+					</section>
+					<section>
+						<h3>Call by name</h3>
+						<p class="fragment fade-right">Lorsque nous passons une expression lambda \(x \rightarrow g (x)\) comme paramètre pour une fonction \(f\) la responsabilité de l'évaluation de l'expression lambda \(x \rightarrow g(x)\) est cédée à la fonctionne \(f\)</p>
+					</section>
+				</section>
+				<section>
+					<div class="row">
+						<div class="column">
+							<img width="400" height="390" src="img/drawing_hands.jpg" alt="Down arrow">
+						</div>
+						<div class="column">
+							<div class="vertical-center">
+								<div style="line-height: 200%"><small>
+									<div><b>Email:</b> andrea.cesaro-ISC.france</div><br>
+									<div><b>Link:</b> <a href="https://cexj.github.io/slides/fr/fp/03-expressions-lambda.html">https://cexj.github.io/slides/fr/fp/03-expressions-lambda.html</a></div><br>
+									<div><b>Slack IBM:</b> lambda</div>
+								</small></div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom,
+
+				math: {
+					// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					TeX: {
+						Macros: {
+							R: '\\mathbb{R}',
+							set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+						}
+					}
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/highlight/highlight.js', async: true },
+					{ src: '../../plugin/search/search.js', async: true },
+					{ src: '../../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../plugin/notes/notes.js', async: true },
+					{ src: '../../plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
