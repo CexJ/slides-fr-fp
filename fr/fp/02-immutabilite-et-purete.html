@@ -106,7 +106,7 @@ final Paragraph firstParagraph =  page.getParagraph(0);
 							</code></pre>
 					</section>
 					<section>
-						<h3>Simplicité dans le partage entre procedures</h3>
+						<h3>Simplicité dans le partage des procédures</h3>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>final Page page = repo.getPageById(id);
 ...
 final Page engPage = GoogleTranslateUtils.translate(page);
@@ -114,7 +114,7 @@ final Page engPage = GoogleTranslateUtils.translate(page);
 					</section>
 					<section>
 						<h3>Simplicité dans le partage entre threads</h3>
-						<p class="fragment fade-right">Les variables en seule lecture n'ont pas besoin des synchronisation</p>
+						<p class="fragment fade-right">Les variables en seule lecture n'ont pas besoin des synchronisations</p>
 					</section>
 				</section>
 				<section>
@@ -161,7 +161,7 @@ Book correctWord(final Book oldBook, final Integer index,
 					</section>
 					<section>
 						<h3>Dans une instruction conditionnelle</h3>
-						<p class="fragment fade-right">À chacun <b>if</b> correspond un <b>else</b></p>
+						<p class="fragment fade-right">À chaque <b>if</b> correspond un <b>else</b></p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 Integer numPages(Book book, Boolean withIndex){
  Integer result;
@@ -215,8 +215,8 @@ final Integer maxNumPage = extractMaxNumPage(books);
 						</code></pre>
 					</section>
 					<section>
-						<h2>Si possible utiliser des API fonctionnelles</h2>
-						<p class="fragment fade-right">Ils cachent l'implémentation mutable et ils donnent des interfaces trés flexibles</p>
+						<h2>Si possible, utiliser des API fonctionnelles</h2>
+						<p class="fragment fade-right">Elles cachent l'implémentation mutable  et elles donnent des interfaces très flexibles</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 ...
 final Integer maxNumPage = books.stream()
@@ -229,9 +229,9 @@ final Integer maxNumPage = books.stream()
 					<section>
 						<h3>Dans le cas d'un objet (Java / C#)</h3>
 						<ul>
-							<li class="fragment fade-right">Definir les champs comment <b>private</b> et <b>final</b></li>
-							<li class="fragment fade-right">Ne definir pas des methodes <b>set</b></li>
-							<li class="fragment fade-right">Definir la classe comment <b>final</b></li>
+							<li class="fragment fade-right">Definir les champs <b>private</b> et <b>final</b></li>
+							<li class="fragment fade-right">Ne definir pas des méthodes <b>set</b></li>
+							<li class="fragment fade-right">Définir la classe comment <b>final</b></li>
 							<li class="fragment fade-right">Copie défensive en <b>entrée</b> et <b>sortie</b></li>
 							<li class="fragment fade-right">Utiliser le pattern <b>builder</b></li>
 						</ul>
@@ -239,10 +239,10 @@ final Integer maxNumPage = books.stream()
 					<section>
 						<h3>Dans le cas d'une collection</h3>
 						<ul>
-							<li class="fragment fade-right">Il exist des versions de collections immutables
+							<li class="fragment fade-right">Il existe des versions de collections immutables
 								<p class="fragment fade-right">Les logiciels de gestion de versions, comme <b>git</b>, sont des collections immutables</p></li>
-							<li class="fragment fade-right">La strategie d'evaluations des expressions-<b>&lambda;</b> peut etre utilisé pour optimiser le code (graphe orienté acyclique)
-								<p class="fragment fade-right">Les <b>Stream</b> en <b>Java</b> ou les <b>RDD</b> en <b>Spark</b> pour exemple</p></li>
+							<li class="fragment fade-right">La stratégie d'évaluation des expressions-<b>&lambda;</b> peut être utilisée pour optimiser le code (graphe orienté acyclique)
+								<p class="fragment fade-right">Les <b>Stream</b> en <b>Java</b> ou les <b>RDD</b> en <b>Spark</b> par exemple</p></li>
 						</ul>
 					</section>
 				</section>
@@ -256,13 +256,13 @@ final Integer maxNumPage = books.stream()
 						<ul>
 							<li class="fragment fade-right">(&sim;1930) <b>Alonzo Church</b> introduit le <b>&lambda;-Calculus</b></li>
 							<li class="fragment fade-right">(&sim;1930) <b>Alan Turing</b> introduit la <b>Machine de Turing</b></li>
-							<li class="fragment fade-right">(&sim;1930) <b>Kurt Gödel</b> et <b>Jacques Herbrand</b> introduit le <b>fonctions &mu;-recursives</b></li>
+							<li class="fragment fade-right">(&sim;1930) <b>Kurt Gödel</b> et <b>Jacques Herbrand</b> introduisent les <b>fonctions &mu;-recursives</b></li>
 							<li class="fragment fade-right">(&sim;1936) <b>Alonzo Church</b> et <b>Alan Turing</b> prouvent l'équivalence des trois théories</li>
 
 						</ul>
 					</section>
 					<section>
-						<h3>La recursion peut étre utilisé au lieu des boucles</h3>
+						<h3>La récursivité peut être utilisée au lieu des boucles</h3>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 Integer factorial(Integer n){
  Integer result=1;
@@ -282,7 +282,7 @@ Integer factorial(final Integer n){
 						</code></pre>
 					</section>
 					<section>
-						<h3>Quel est le problème de la recursion ?</h3>
+						<h3>Quel est le problème de la récursivité ?</h3>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 Integer infinite(){
  if(true) return infinite();
@@ -293,18 +293,18 @@ Integer infinite(){
 					</section>
 					<section>
 						<h3>Tail recursion</h3>
-						<p class="fragment fade-right">Chaque fonction récursive peut étre transformé dans une forme dit <b>tail recursive</b></p>
-						<p class="fragment fade-right">Les compilateurs / interpréteurs des langages fonctionnelles implémentent la <b>tail recursive optimisation</b></p>
+						<p class="fragment fade-right">Chaque fonction récursive peut être transformée dans une forme dite <b>tail recursive</b></p>
+						<p class="fragment fade-right">Les compilateurs / interpréteurs des languages fonctionnels implémentent la <b>tail recursive optimisation</b></p>
 					</section>
 					<section>
 						<h3>Immutabilité</h3>
-						<p class="fragment fade-right">Par default ou tres simple à realiser</p>
+						<p class="fragment fade-right">Par défaut ou très simple à réaliser</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 case class Book(title: String, pageNumber: Int = 0){
  def desc(): String = s"The book $book has $pageNumber pages"
 }
 						</code></pre>
-						<p class="fragment fade-right">Il permet d'avoir du <b>filtrage par motif</b> (<b>pattern matching</b>)</p>
+						<p class="fragment fade-right">Il permet d'avoir le <b>filtrage par motif</b> (<b>pattern matching</b>)</p>
 					</section>
 				</section>
 				<section>
