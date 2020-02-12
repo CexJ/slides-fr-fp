@@ -85,7 +85,7 @@
 					<h3>Résumé de la présentation</h3>
 					<ul>
 						<li class="fragment fade-right">Qu'est-ce qu'une expression-&lambda; ?</li>
-						<li class="fragment fade-right">Comment sont-elles implementé ?</li>
+						<li class="fragment fade-right">Comment sont-elles implémentées ?</li>
 						<li class="fragment fade-right">Stratégies d'évaluation</li>
 						<li class="fragment fade-right">Dualité workflow - data structure</li>
 					</ul>
@@ -97,7 +97,7 @@
 					</section>					
 					<section>
 						<h3>Briser le mur entre valeurs et fonctions</h3>
-						<p  class="fragment fade-right">Nous sommes habitués à attribuer des valeurs aux variables et l'utiliser plus tard.</p>
+						<p  class="fragment fade-right">Nous sommes habitués à attribuer des valeurs aux variables  et à les utiliser plus tard.</p>
 						<p  class="fragment fade-right">Les variables peuvent être utilisées pour paramétrer les calculs.</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Page page = repo.getPageById(id);
 ...
@@ -145,7 +145,7 @@ String forbiddenWord = getTabooWord(language);
 Boolean noForbiddenWord =
   checkGrammar(page, s -&gt; ! s.contains(forbiddenWord));
 							</code></pre>
-						<p class="fragment fade-right">(Java) Pour des raisons techniques, les variables capturé doivent être "effectivement finales".</p>
+						<p class="fragment fade-right">(Java) Pour des raisons techniques, les variables capturées doivent être "effectivement finales".</p>
 					</section>
 					<section>
 						<p>Lorsque nous utilisons des expressions-&lambda;, les exceptions peuvent être problématiques et leur utilisation n'est pas suggérée</p>
@@ -154,7 +154,7 @@ Boolean noForbiddenWord =
 				</section>
 				<section>
 					<section>
-						<h2>Comment sont-elles implementé ?</h2>
+						<h2>Comment sont-elles implémentées ?</h2>
 					</section>
 					<section>
 						<h3>Objets anonymes</h3>
@@ -179,8 +179,8 @@ Button button = new Button(){
 						</code></pre>
 					</section>
 					<section>
-						<h3>Fonctiones anonymes</h3>
-						<p class="fragment fade-right">Dans Java et C#, les expressions-&lambda; ne sont que du sucre syntactic pour un objet anonyme avec une seule méthode</p>
+						<h3>Fonctions anonymes</h3>
+						<p class="fragment fade-right">Dans Java et C#, les expressions-&lambda; ne sont que du sucre syntactique pour un objet anonyme avec une seule méthode</p>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 Interface MyLambdaType{
  Integer doSomething(String param);
@@ -210,7 +210,7 @@ MyLambdaType myLambda = p -> p.length();
 					</section>
 					<section>
 						<h3>Call by name</h3>
-						<p class="fragment fade-right">Lorsque nous passons une expression lambda \(x \rightarrow g (x)\) comme paramètre pour une fonction \(f\) la responsabilité de l'évaluation de l'expression lambda \(x \rightarrow g(x)\) est cédée à la fonctionne \(f\) \[f(x \rightarrow g(x))\]</p>
+						<p class="fragment fade-right">Lorsque nous passons une expression lambda \(x \rightarrow g (x)\) comme paramètre pour une fonction \(f\) la responsabilité de l'évaluation de l'expression lambda \(x \rightarrow g(x)\) est cédée à la fonction \(f\) \[f(x \rightarrow g(x))\]</p>
 				</section>
 			</section>
 			<section>
