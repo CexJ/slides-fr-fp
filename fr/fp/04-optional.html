@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Je n'ai jamais rien fait d'utile.</title>
+
+		<meta name="description" content="Il peut en effet y avoir d'autres applications du système que son utilisation comme logique.">
+		<meta name="author" content="Andrea Cesaro">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="../../css/reset.css">
+		<link rel="stylesheet" href="../../css/reveal.css">
+		<link rel="stylesheet" href="../../css/theme/sky.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/css/zenburn.css">
+
+		<style>
+			* {
+  				box-sizing: border-box;
+			}
+
+			/* Create two equal columns that floats next to each other */
+			.column {
+  				float: left;
+  				width: 50%;
+  				padding: 10px;
+			}
+
+			/* Clear floats after the columns */
+			.row:after {
+  				content: "";
+  				display: table;
+  				clear: both;
+			}
+
+			b.lowercase {
+  				text-transform: lowercase;
+			}
+
+			.vertical-center {
+  				margin: 0;
+  				position: absolute;
+  				top: 50%;
+  				-ms-transform: translateY(-50%);
+			  	transform: translateY(-50%);
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Le chat de Schrödinger</h2>
+					<h5>L'API Optional dans la programmation fonctionnelle</h5>
+					<p>
+						<small>Auteur <a href="http://cexj.github.io">Andrea Cesaro</a>, powered by: <a href="https://github.com/hakimel/reveal.js/">Reveal.js</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h3>Résumé de la présentation</h3>
+					<ul>
+						<li class="fragment fade-right">L'erreur d'un milliard de dollars</li>
+						<li class="fragment fade-right">Comment fonctionne l'API Optional</li>
+						<li class="fragment fade-right">Exemples</li>
+						<li class="fragment fade-right">Implémentation</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>L'erreur d'un milliard de dollars</h2>
+					</section>					
+					<section>
+						<h3>Cette fonction est un mensonge</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>double division(double a, double b){
+  return a/b;
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+double result = division(a,0);
+...
+						</code></pre>
+					</section>
+					<section>
+						<h3>Cette fonction est maladroite</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>double division(double a, double b) throws Exception {
+  return a/b;
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+double result;
+try{
+  result = division(a,b);
+  ... // do something with result
+} catch(Exception ex)	{
+  ... // do something else
+}
+						</code></pre>
+					</section>
+					<section>
+						<h3>Cette fonction est un erreur d'un milliard de dollars</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Double division(Double a, Double b) {
+  if(a == null ||
+     b == null ||
+     b == 0) {
+    return null;
+  } else {
+    return a/b;
+  }
+}
+						</code></pre>
+						<p class="fragment fade-right">Scénario habituel</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Double result = division(a,b);
+... // do something with result
+						</code></pre>
+					</section>
+					<section>
+						<p>Le meilleur scénario</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Double result = division(a,b);
+if(result != null) {
+  ... // do something with result
+} else {
+  ... // do something else
+}
+						</code></pre>
+						<p class="fragment fade-right">encore et encore...</p>
+					</section>
+					<section>
+						<h3>Nous voulons transformer la forme de ce code en une structure de données / type</h3>
+					</section>
+					<section>
+						<div class="row">
+							<div class="column">
+								<pre class="fragment fade-right"><code class="hljs" data-trim>if(x != null) {
+  ... // do something with x
+} else {
+  ... // do something else
+}
+								</code></pre>
+							</div>
+							<div class="column">
+								<pre class="fragment fade-left"><code class="hljs" data-trim>// do something with x</code></pre>
+								<ul style="list-style-type: none">
+									<li class="fragment fade-left">filtrer \(x\)</li>
+									<li class="fragment fade-left">transformer \(x\) en \(y\)</li>
+									<li class="fragment fade-left">consommer \(x\)</li>
+								</ul>
+								<pre class="fragment fade-left"><code class="hljs" data-trim>// do something else</code></pre>
+								<ul style="list-style-type: none">
+									<li class="fragment fade-left">obtenir une valeur par défaut</li>
+									<li class="fragment fade-left">lève une exception</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Comment fonctionne l'API Optional</h2>
+					</section>
+					<section>
+						<h2>Produire un Optional</h2>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.of(new Circle());
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.empty();
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.ofNullable(getCircle());
+						</code></pre>
+					</section>
+					<section>
+						<p>Si nous ne pouvons pas changer la méthode que nous appelons</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Double division(Double a, Double b) {
+  if(a == null ||
+     b == null ||
+     b == 0) {
+    return null;
+  } else {
+    return a/b;
+  }
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Optional&lt;Double&gt; oResult = Optional.ofNullable(division(a,b));
+...
+						</code></pre>
+					</section>
+					<section>
+						<p>Si nous pouvons changer la méthode que nous appelons</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Double&gt; division(Double a, Double b) {
+  if(a == null ||
+     b == null ||
+     b == 0) {
+    return Optional.empty();
+  } else {
+    return Optional.of(a/b);
+  }
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Optional&lt;Double&gt; oResult = division(a,b);
+...
+						</code></pre>
+					</section>
+					<section>
+						<h2>Filtrer un Optional</h2>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
+Optional&lt;Circle&gt; newOCircle = oCircle.filter(c -> c.isBlack());
+						</code></pre>
+					</section>
+					<section>
+						<h2>Mapper un Optional</h2>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
+Optional&lt;Triangle&gt; oTriangle = oCircle.map(c -> toTriangle(c));
+						</code></pre>
+					</section>
+					<section>
+						<h2>FlatMapper un Optional</h2>
+						<img class="fragment fade-right" width="300" height="100" src="img/flatMapEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
+Optional&lt;Triangle&gt; oTriangle = oCircle.map(c -> toTriangleIfBlack(c));
+						</code></pre>
+					</section>
+					<section>
+						<h2>Extraire ou obtenir une valeur par défaut</h2>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
+Circle circle = oCircle.orElse(new Circle("white"));
+						</code></pre>
+					</section>
+					<section>
+						<h2>Extraire une valuer ou lever une exception</h2>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
+Circle circle = oCircle.orThrow(() -> new Exception());
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Exemples</h2>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Implémentation</h2>
+					</section>
+					<section>
+						<h3>Live code !</h3>
+					</section>
+				</section>
+				<section>
+					<div class="row">
+						<div class="column">
+							<img width="400" height="390" src="img/man_with_cuboid.jpg" alt="Down arrow">
+						</div>
+						<div class="column">
+							<div class="vertical-center">
+								<div style="line-height: 200%">
+									<small>
+										<div><b>Email:</b> andrea.cesaro-ISC.france</div><br>
+										<div><b>Link:</b> <a href="https://cexj.github.io/slides/fr/fp/04-optional.html">https://cexj.github.io/slides/fr/fp/04-optional.html</a></div><br>
+										<div><b>Slack IBM:</b> lambda</div>
+									</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom,
+
+				math: {
+					// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					TeX: {
+						Macros: {
+							R: '\\mathbb{R}',
+							set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+						}
+					}
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/highlight/highlight.js', async: true },
+					{ src: '../../plugin/search/search.js', async: true },
+					{ src: '../../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../plugin/notes/notes.js', async: true },
+					{ src: '../../plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

@@ -121,7 +121,7 @@ Integer wordNumber = wordCnt.apply(line);
 Boolean checkGrammar(Page page,
                      Function&lt;String, Boolean&gt; lineChecker){
  for(String line : page.getLines()){
-  if(! lineCheck.apply(line)){
+  if(! lineChecker.apply(line)){
    return false;
   }
  }
@@ -268,22 +268,23 @@ ex.do(x -> writeOnDB(x))
 			</section>
 			<section>
 				<div class="row">
-						<div class="column">
-							<img width="400" height="390" src="img/drawing_hands.jpg" alt="Down arrow">
-						</div>
-						<div class="column">
-							<div class="vertical-center">
-								<div style="line-height: 200%"><small>
+					<div class="column">
+						<img width="400" height="390" src="img/drawing_hands.jpg" alt="Down arrow">
+					</div>
+					<div class="column">
+						<div class="vertical-center">
+							<div style="line-height: 200%">
+								<small>
 									<div><b>Email:</b> andrea.cesaro-ISC.france</div><br>
 									<div><b>Link:</b> <a href="https://cexj.github.io/slides/fr/fp/03-expressions-lambda.html">https://cexj.github.io/slides/fr/fp/03-expressions-lambda.html</a></div><br>
 									<div><b>Slack IBM:</b> lambda</div>
-								</small></div>
+								</small>
 							</div>
 						</div>
 					</div>
-				</section>
+				</div>
+			</section>
 			</div>
-
 		</div>
 
 		<script src="../../js/reveal.js"></script>
