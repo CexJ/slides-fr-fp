@@ -186,13 +186,123 @@ if(result != null) {
 						<h2>Comment fonctionne l'API Optional</h2>
 					</section>
 					<section>
+						<p>Optional c'est une boîte</p>
+						<p class="fragment fade-right">Elle peut être vide</p>
+						<img class="fragment fade-right" width="80" height="80" src="img/empty.png" alt="Down arrow" style="border:0px">
+						<p class="fragment fade-right">ou elle peut contenir une valeur (objet)</p>
+						<img class="fragment fade-right" width="80" height="80" src="img/of.png" alt="Down arrow" style="border:0px">
+						<p class="fragment fade-right">On peut y penser comme une liste avec au plus un élément</p>
+					</section>
+					<section>
 						<h2>Produire un Optional</h2>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.of(new Circle());
-						</code></pre>
+						<p>empty</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/optionalEmpty.png" alt="Down arrow" style="border:0px">
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.empty();
 						</code></pre>
+						<p>of</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/optionalOf.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.of(new Circle());
+						</code></pre>
+					</section>
+					<section>
+						<p>ofNullable</p>
+						<img class="fragment fade-right" width="240" height="200" src="img/optionalOfNullable.png" alt="Down arrow" style="border:0px">
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = Optional.ofNullable(getCircle());
 						</code></pre>
+					</section>
+					<section>
+						<h2>Filtrer un Optional</h2>
+						<img class="fragment fade-right" width="240" height="80" src="img/filterTrue.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/filterFalse.png" alt="Down arrow" style="border:0px"><br>
+						<p class="fragment fade-right">filter</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/filterOfTrue.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/filterOfFalse.png" alt="Down arrow" style="border:0px"><br>
+						<img class="fragment fade-right" width="240" height="80" src="img/filterEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Optional&lt;Circle&gt; newOCircle = oCircle
+                               .filter(c -> c.isBlack());
+						</code></pre>
+					</section>
+					<section>
+						<h2>Mapper un Optional</h2>
+						<img class="fragment fade-right" width="240" height="80" src="img/map.png" alt="Down arrow" style="border:0px"><br>
+						<p class="fragment fade-right">map</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/mapOf.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/mapEmpty.png" alt="Down arrow" style="border:0px"><br>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Optional&lt;Triangle&gt; oTriangle = oCircle
+                                .map(c -> toTriangle(c));
+						</code></pre>
+					</section>
+					<section>
+						<h2>FlatMapper un Optional</h2>
+						<img class="fragment fade-right" width="240" height="80" src="img/flatMapFull.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/flatMapNotFull.png" alt="Down arrow" style="border:0px"><br>
+						<p class="fragment fade-right">flatMap</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/flatMapOfFull.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/flatMapOfNotFull.png" alt="Down arrow" style="border:0px"><br>
+						<img class="fragment fade-right" width="240" height="80" src="img/flatMapEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Optional&lt;Triangle&gt; oTriangle = oCircle
+                                .map(c -> toTriangleIfBlack(c));
+						</code></pre>
+					</section>
+					<section>
+						<h2>Extraire ou obtenir une valeur par défaut</h2>
+						<img class="fragment fade-right" width="240" height="40" src="img/default.png" alt="Down arrow" style="border:0px">
+						<p class="fragment fade-right">orElse</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/defaultOf.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/defaultEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Circle circle = oCircle
+                 .orElse(new Circle("white"));
+						</code></pre>
+					</section>
+					<section>
+						<h2>Extraire une valuer ou lever une exception</h2>
+						<p class="fragment fade-right">orThrow</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/exceptionOf.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/exceptionEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Circle circle = oCircle
+                 .orThrow(() -> new Exception());
+						</code></pre>
+					</section>
+					<section>
+						<h2>Consume une valuer</h2>
+						<img class="fragment fade-right" width="240" height="80" src="img/action.png" alt="Down arrow" style="border:0px">
+						<p class="fragment fade-right">ifPresent</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/actionOf.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/actionEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Circle circle = oCircle
+                 .ifPresent(c -> insertDB(c));
+						</code></pre>
+					</section>
+					<section>
+						<h2>Vérifier s'il y a une valeur</h2>
+						<p class="fragment fade-right">isPresent</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/isPresentOf.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/isPresentEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+boolean isPresent = oCircle
+                     .isPresent();
+						</code></pre>
+					</section>
+					<section>
+						<h2>Obtenez une valeur</h2>
+						<p class="fragment fade-right">get</p>
+						<img class="fragment fade-right" width="240" height="80" src="img/getOf.png" alt="Down arrow" style="border:0px">
+						<img class="fragment fade-right" width="240" height="80" src="img/getEmpty.png" alt="Down arrow" style="border:0px">
+						<pre class="fragment fade-right"><code class="hljs" data-trim>
+Circle circle = oCircle
+                 .get();
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Exemples</h2>
 					</section>
 					<section>
 						<p>Si nous ne pouvons pas changer la méthode que nous appelons</p>
@@ -229,40 +339,31 @@ Optional&lt;Double&gt; oResult = division(a,b);
 						</code></pre>
 					</section>
 					<section>
-						<h2>Filtrer un Optional</h2>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
-Optional&lt;Circle&gt; newOCircle = oCircle.filter(c -> c.isBlack());
+						<p>Filtrer un résultat</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Double result = Optional.ofNullable(division(a,b))
+                 .filter(r -> r > 1)
+                 .orElse(0);
+...
 						</code></pre>
 					</section>
 					<section>
-						<h2>Mapper un Optional</h2>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
-Optional&lt;Triangle&gt; oTriangle = oCircle.map(c -> toTriangle(c));
+						<p>Appel sécurisé des méthodes</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+String result = Optional.ofNullable(division(a,b))
+                 .map(r -> r.toString())
+                 .orElse(null);
+...
 						</code></pre>
 					</section>
 					<section>
-						<h2>FlatMapper un Optional</h2>
-						<img class="fragment fade-right" width="300" height="100" src="img/flatMapEmpty.png" alt="Down arrow" style="border:0px">
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
-Optional&lt;Triangle&gt; oTriangle = oCircle.map(c -> toTriangleIfBlack(c));
+						<p>Composition des Optional</p>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+Double result = Optional.ofNullable(division(a,b))
+                 .flatMap(r -> division(r,c))
+                 .orElse(0);
+...
 						</code></pre>
-					</section>
-					<section>
-						<h2>Extraire ou obtenir une valeur par défaut</h2>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
-Circle circle = oCircle.orElse(new Circle("white"));
-						</code></pre>
-					</section>
-					<section>
-						<h2>Extraire une valuer ou lever une exception</h2>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Circle&gt; oCircle = getOptional;
-Circle circle = oCircle.orThrow(() -> new Exception());
-						</code></pre>
-					</section>
-				</section>
-				<section>
-					<section>
-						<h2>Exemples</h2>
 					</section>
 				</section>
 				<section>
