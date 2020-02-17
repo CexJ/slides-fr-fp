@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Je n'ai jamais rien fait d'utile.</title>
+		<title>Le chat de Schrödinger</title>
 
-		<meta name="description" content="Il peut en effet y avoir d'autres applications du système que son utilisation comme logique.">
+		<meta name="description" content="Le chat de Schrödinger">
 		<meta name="author" content="Andrea Cesaro">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -124,10 +124,8 @@ try{
 					</section>
 					<section>
 						<h3>Cette fonction est un erreur d'un milliard de dollars</h3>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Double division(Double a, Double b) {
-  if(a == null ||
-     b == null ||
-     b == 0) {
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Double division(double a, double b) {
+  if(b == 0) {
     return null;
   } else {
     return a/b;
@@ -274,9 +272,7 @@ Circle circle = oCircle
 						<p class="fragment fade-right">ifPresent</p>
 						<img class="fragment fade-right" width="240" height="80" src="img/actionOf.png" alt="Down arrow" style="border:0px">
 						<img class="fragment fade-right" width="240" height="80" src="img/actionEmpty.png" alt="Down arrow" style="border:0px">
-						<pre class="fragment fade-right"><code class="hljs" data-trim>
-Circle circle = oCircle
-                 .ifPresent(c -> insertDB(c));
+						<pre class="fragment fade-right"><code class="hljs" data-trim>oCircle.ifPresent(c -> insertDB(c));
 						</code></pre>
 					</section>
 					<section>
@@ -306,10 +302,8 @@ Circle circle = oCircle
 					</section>
 					<section>
 						<p>Si nous ne pouvons pas changer la méthode que nous appelons</p>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Double division(Double a, Double b) {
-  if(a == null ||
-     b == null ||
-     b == 0) {
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Double division(double a, double b) {
+  if(b == 0) {
     return null;
   } else {
     return a/b;
@@ -323,10 +317,8 @@ Optional&lt;Double&gt; oResult = Optional.ofNullable(division(a,b));
 					</section>
 					<section>
 						<p>Si nous pouvons changer la méthode que nous appelons</p>
-						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Double&gt; division(Double a, Double b) {
-  if(a == null ||
-     b == null ||
-     b == 0) {
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Optional&lt;Double&gt; division(double a, double b) {
+  if(b == 0) {
     return Optional.empty();
   } else {
     return Optional.of(a/b);
