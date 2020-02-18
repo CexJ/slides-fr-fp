@@ -114,10 +114,10 @@ double result = division(a,0);
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>...
 double result;
-try{
+try {
   result = division(a,b);
   ... // do something with result
-} catch(Exception ex)	{
+} catch(Exception ex) {
   ... // do something else
 }
 						</code></pre>
@@ -156,7 +156,7 @@ if(result != null) {
 					<section>
 						<div class="row">
 							<div class="column">
-								<pre class="fragment fade-right"><code class="hljs" data-trim>if(x != null) {
+								<pre class="fragment fade-right"><code class="hljs" data-trim>if(x != null && cond(x)) {
   ... // do something with x
 } else {
   ... // do something else
@@ -164,9 +164,12 @@ if(result != null) {
 								</code></pre>
 							</div>
 							<div class="column">
-								<pre class="fragment fade-left"><code class="hljs" data-trim>// do something with x</code></pre>
+								<pre class="fragment fade-left"><code class="hljs" data-trim>cond(x)</code></pre>
 								<ul style="list-style-type: none">
 									<li class="fragment fade-left">filtrer \(x\)</li>
+								</ul>
+								<pre class="fragment fade-left"><code class="hljs" data-trim>// do something with x</code></pre>
+								<ul style="list-style-type: none">
 									<li class="fragment fade-left">transformer \(x\) en \(y\)</li>
 									<li class="fragment fade-left">consommer \(x\)</li>
 								</ul>
@@ -242,7 +245,7 @@ Optional&lt;Triangle&gt; oTriangle = oCircle
 						<img class="fragment fade-right" width="240" height="80" src="img/flatMapEmpty.png" alt="Down arrow" style="border:0px">
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
 Optional&lt;Triangle&gt; oTriangle = oCircle
-                                .map(c -> toTriangleIfBlack(c));
+                                .flatMap(c -> toTriangleIfBlack(c));
 						</code></pre>
 					</section>
 					<section>
@@ -291,8 +294,7 @@ boolean isPresent = oCircle
 						<img class="fragment fade-right" width="240" height="80" src="img/getOf.png" alt="Down arrow" style="border:0px">
 						<img class="fragment fade-right" width="240" height="80" src="img/getEmpty.png" alt="Down arrow" style="border:0px">
 						<pre class="fragment fade-right"><code class="hljs" data-trim>
-Circle circle = oCircle
-                 .get();
+Circle circle = oCircle.get();
 						</code></pre>
 					</section>
 				</section>
