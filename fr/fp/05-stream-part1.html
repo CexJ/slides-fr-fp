@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Programs are lists</title>
+
+		<meta name="description" content="Programs are lists">
+		<meta name="author" content="Andrea Cesaro">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="../../css/reset.css">
+		<link rel="stylesheet" href="../../css/reveal.css">
+		<link rel="stylesheet" href="../../css/theme/sky.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/css/zenburn.css">
+
+		<style>
+			* {
+  				box-sizing: border-box;
+			}
+
+			/* Create two equal columns that floats next to each other */
+			.column {
+  				float: left;
+  				width: 50%;
+  				padding: 10px;
+			}
+
+			/* Clear floats after the columns */
+			.row:after {
+  				content: "";
+  				display: table;
+  				clear: both;
+			}
+
+			b.lowercase {
+  				text-transform: lowercase;
+			}
+
+			.vertical-center {
+  				margin: 0;
+  				position: absolute;
+  				top: 50%;
+  				-ms-transform: translateY(-50%);
+			  	transform: translateY(-50%);
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Programs are lists</h2>
+					<h5>L'API Stream dans la programmation fonctionnelle (Part I)</h5>
+					<p>
+						<small>Auteur <a href="http://cexj.github.io">Andrea Cesaro</a>, powered by: <a href="https://github.com/hakimel/reveal.js/">Reveal.js</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h3>Résumé de la présentation</h3>
+					<ul>
+						<li class="fragment fade-right">Motivations pour une meilleure liste</li>
+						<li class="fragment fade-right">Comment fonctionne l'API Stream ?</li>
+						<li class="fragment fade-right">Vers l'infini, et au-delà !</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>Motivations pour une meilleure liste</h2>
+					</section>
+					<section>
+						<h3>Listes en programmation</h3>
+						<p class="fragment fade-right">Le concept de liste est central dans la programmation</p>
+						<p class="fragment fade-right">Il existe des langages de programmation (LISP) créés autour du concept de manipulations de listes</p>
+						<p class="fragment fade-right">Un programme n'est rien d'autre qu'une liste de commandes / expressions</p>
+					</section>
+					<section>
+						<h3>Listes comme API impérative</h3>
+						<p class="fragment fade-right">L'API habituelle est impérative, mutable et ce concentre sur la manipulation de bas niveau (add, delete, contains)</p>
+						<p class="fragment fade-right">Cette API ne manipule pas la liste des éléments dans son ensemble</p>
+						<p class="fragment fade-right">Manipulations comme filter, mapping, reducing...  sont verbeux et répétitives</p>
+					</section>
+					<section>
+						<h3>Listes comme API fonctionnelle</h3>
+						<p class="fragment fade-right">Nous avons besoin d'une API immuable et de niveau supérieur</p>
+						<p class="fragment fade-right">L'API Stream est une solution possible (pas l'unique)</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Comment fonctionne l'API Stream ?</h2>
+					</section>
+					<section>
+						<h3>Comment créer un Stream à partir d'une liste</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+List&lt;Page&gt; pages = book.getPages();
+Stream&lt;Page&gt; sPages =  pages.stream();
+...
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>...
+List&lt;Page&gt; pages = book.getPages();
+Stream&lt;Page&gt; sPages =  pages.parallelStream();
+...
+						</code></pre>
+					</section>
+					<section>
+						<h3>Filter</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>List&lt;Page&gt; filteredPages = new ArrayList<>();
+for(Page page : pages){
+  if(cond(page)){
+    filteredPages.add(page);
+  }
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+Stream&lt;Page&gt; sFilteredPages = sPages
+                               .filter(p -> cond(p));
+						</code></pre>
+					</section>
+					<section>
+						<h3>Map</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>List&lt;Integer&gt; pageLines = new ArrayList<>();
+for(Page page : pages){
+  pageLines.add(page.getNumLines());
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+Stream&lt;Integer&gt; pageLines = sPages
+                               .map(p -> p.getNumLines());
+						</code></pre>
+					</section>
+					<section>
+						<h3>FlatMap</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>List&lt;Word&gt; words = new ArrayList<>();
+for(Page page : pages){
+  for(Word word : page.getWords()){
+    words.add(word);
+  }
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+Stream&lt;Integer&gt; pageLines = sPages
+                               .flatMap(p -> p.getWords());
+						</code></pre>
+					</section>
+					<section>
+						<h3>Reduce</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Integer totLines = 0;
+for(Page page : pages){
+  totLines += page.getNumLines();
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+Integer totLines = sPages
+                    .reduce(0, (n,p) -> n + p.getNumLines());
+						</code></pre>
+					</section>
+					<section>
+						<h3>FindFirst</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Page find = null;
+for(Page page : pages){
+  if(cond(page)){
+    find = page;
+    break;
+  }
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+Page find = sPages
+              .filter(p -> cond(p))
+              .findFirst();
+						</code></pre>
+					</section>
+					<section>
+						<h3>Foreach</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>for(Page page : pages){
+  saveDB(page);
+}
+						</code></pre>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+sPages.foreach(p -> saveDB(p));
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Vers l'infini, et au-delà !</h2>
+					</section>
+					<section>
+						<h3>Comment créer un Stream infini</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Integer&gt; naturalNum = Stream.iterate(0, i -> i+1);
+						</code></pre>
+						<p class="fragment fade-right">Cela est possible grâce à l'évaluation des expressions-&lambda;</p>
+						<p class="fragment fade-right">Plus des details dans la Part II</p>
+					</section>
+				</section>
+				<section>
+					<div class="row">
+						<div class="column">
+							<img width="400" height="390" src="img/reptiles.jpg" alt="Down arrow">
+						</div>
+						<div class="column">
+							<div class="vertical-center">
+								<div style="line-height: 200%">
+									<small>
+										<div><b>Email:</b> andrea.cesaro-ISC.france</div><br>
+										<div><b>Link:</b> <a href="https://cexj.github.io/slides/fr/fp/05-stream-part1.html">https://cexj.github.io/slides/fr/fp/05-stream-part1.html</a></div><br>
+										<div><b>Slack IBM:</b> lambda</div>
+									</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom,
+
+				math: {
+					// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					TeX: {
+						Macros: {
+							R: '\\mathbb{R}',
+							set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+						}
+					}
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/highlight/highlight.js', async: true },
+					{ src: '../../plugin/search/search.js', async: true },
+					{ src: '../../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../plugin/notes/notes.js', async: true },
+					{ src: '../../plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
