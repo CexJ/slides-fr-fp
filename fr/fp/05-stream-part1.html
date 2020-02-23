@@ -197,6 +197,14 @@ Page find = sPages
 						</code></pre>
 					</section>
 					<section>
+						<h3>Collect</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
+...
+List&lt;Page&gt; find = sPages
+              .collect(Collectors.toList());
+						</code></pre>
+					</section>
+					<section>
 						<h3>Foreach</h3>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>for(Page page : pages){
   saveDB(page);
