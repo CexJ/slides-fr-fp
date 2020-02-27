@@ -107,7 +107,7 @@
 					</section>
 					<section>
 						<h3>Listes comme API fonctionnelle</h3>
-						<p class="fragment fade-right">Nous avons besoin d'une API immuable et de niveau supérieur</p>
+						<p class="fragment fade-right">Nous avons besoin d'une API immutable et de niveau supérieur</p>
 						<p class="fragment fade-right">L'API Stream est une solution possible (pas l'unique)</p>
 					</section>
 				</section>
@@ -177,7 +177,8 @@ for(Page page : pages){
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
 Integer totLines = sPages
-                    .reduce(0, (n,p) -> n + p.getNumLines());
+                    .map(p -> p.getNumLines())
+                    .reduce((n,m) -> n + m);
 						</code></pre>
 					</section>
 					<section>
@@ -191,15 +192,14 @@ for(Page page : pages){
 }
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
-Page find = sPages
-              .filter(p -> cond(p))
-              .findFirst();
+Optional&lt;Page&gt; find = sPages
+                       .filter(p -> cond(p))
+                       .findFirst();
 						</code></pre>
 					</section>
 					<section>
 						<h3>Collect</h3>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
-...
 List&lt;Page&gt; find = sPages
               .collect(Collectors.toList());
 						</code></pre>
@@ -212,6 +212,36 @@ List&lt;Page&gt; find = sPages
 						</code></pre>
 						<pre class="fragment fade-right"><code class="hljs" data-trim>Stream&lt;Page&gt; sPages = pages.stream();
 sPages.foreach(p -> saveDB(p));
+						</code></pre>
+					</section>
+					<section>
+						<h3>Exemple</h3>
+						<pre class="fragment fade-right"><code class="hljs" data-trim data-line-numbers>Integer maxCopiesInEn(List&lt;Book&gt; books){
+  Integer res = null;
+  for(Book book : books) {
+    if("en".equals(book.getLanguage())) {
+      Integer bookNumCopies = book.getNumCopies()
+      if(res == null || res &lt; bookNumCopies) {
+        res = bookNumCopies;
+      }
+    }
+  }
+  if(res == null) {
+    throw new RuntimeException();
+  } else {
+    return res;
+  }
+}
+							</code></pre>
+					</section>
+					<section>
+						<p>Avec Stream</p>
+						<pre><code class="hljs" data-trim data-line-numbers>Optional&lt;Integer&gt; maxCopiesInEn(List&lt;Book&gt; books){
+  return books.stream()
+           .filter(book -> "en".equals(book.getLanguage()))
+           .map(Book::getNumCopies)
+           .max((x,y) -> x &lt; y);
+}
 						</code></pre>
 					</section>
 				</section>
