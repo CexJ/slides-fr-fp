@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The lazy man gets round the sun as quickly as the busy one</title>
+
+		<meta name="description" content="Programs are lists">
+		<meta name="author" content="Andrea Cesaro">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="../../css/reset.css">
+		<link rel="stylesheet" href="../../css/reveal.css">
+		<link rel="stylesheet" href="../../css/theme/sky.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../lib/css/zenburn.css">
+
+		<style>
+			* {
+  				box-sizing: border-box;
+			}
+
+			/* Create two equal columns that floats next to each other */
+			.column {
+  				float: left;
+  				width: 50%;
+  				padding: 10px;
+			}
+
+			/* Clear floats after the columns */
+			.row:after {
+  				content: "";
+  				display: table;
+  				clear: both;
+			}
+
+			b.lowercase {
+  				text-transform: lowercase;
+			}
+
+			.vertical-center {
+  				margin: 0;
+  				position: absolute;
+  				top: 50%;
+  				-ms-transform: translateY(-50%);
+			  	transform: translateY(-50%);
+			}
+		</style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="../../lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>The lazy man gets round the sun as quickly as the busy one</h2>
+					<h5>L'API Stream dans la programmation fonctionnelle (Part II)</h5>
+					<p>
+						<small>Auteur <a href="http://cexj.github.io">Andrea Cesaro</a>, powered by: <a href="https://github.com/hakimel/reveal.js/">Reveal.js</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h3>Résumé de la présentation</h3>
+					<ul>
+						<li class="fragment fade-right">Transformations</li>
+						<li class="fragment fade-right">Opérations terminales</li>
+						<li class="fragment fade-right">Performances et limitations</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>Transformations</h2>
+					</section>
+					<section>
+						<h3>Graphe orienté acyclique</h3>
+						<p class="fragment fade-right">Certaines méthodes de l'API Stream prennent des expressions-&lambda; et retournent un objet Stream</p>
+						<p class="fragment fade-right">Ces méthodes sont appelées transformations</p>
+						<p class="fragment fade-right">Dans les coulisses, l'API Stream n'évalue pas les expressions, il les stocke dans un "graphe orienté acyclique"</p>
+						<p class="fragment fade-right">Filter, map, flatMap... sont des transformations</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Opérations terminales</h2>
+					</section>
+					<section>
+						<h3>L'exécution, enfin</h3>
+						<p class="fragment fade-right">Les méthodes du flux API qui renvoient une valeur qui n'est pas un nouveau objet Stream sont appelées opérations terminales</p>
+						<p class="fragment fade-right">Ils déclenchent les exécutions des expressions stockées</p>
+						<p class="fragment fade-right">Reduce, findFirst, collect... sont des opérations terminales</p>
+					</section>
+
+				</section>
+				<section>
+					<section>
+						<h2>Performances et limitations</h2>
+					</section>
+					<section>
+						<h3>Performances</h3>
+						<p class="fragment fade-right">Une fois déclenché, chaque élément du Stream est évalué par la composition de toutes les expressions-&lambda;</p>
+						<p class="fragment fade-right">En termes de listes, il n'y a qu'une seule boucle</p>
+					</section>
+					<section>
+						<h3>Limitations</h3>
+						<p class="fragment fade-right">Stream minimise l'exécution mais prend plus de mémoire (pour stocker le graphe orienté acyclique)</p>
+						<p class="fragment fade-right">Un Stream ne peut être exécuté qu'une seule fois, il ne peut pas partager différentes opérations terminales</p>
+					</section>
+				</section>
+				<section>
+					<div class="row">
+						<div class="column">
+							<img width="400" height="390" src="img/sky_and_water.jpg" alt="Down arrow">
+						</div>
+						<div class="column">
+							<div class="vertical-center">
+								<div style="line-height: 200%">
+									<small>
+										<div><b>Email:</b> andrea.cesaro-ISC.france</div><br>
+										<div><b>Link:</b> <a href="https://cexj.github.io/slides/fr/fp/06-stream-part2.html">https://cexj.github.io/slides/fr/fp/06-stream-part2.html</a></div><br>
+										<div><b>Slack IBM:</b> lambda</div>
+									</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="../../js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom,
+
+				math: {
+					// mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full',
+					TeX: {
+						Macros: {
+							R: '\\mathbb{R}',
+							set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+						}
+					}
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../plugin/highlight/highlight.js', async: true },
+					{ src: '../../plugin/search/search.js', async: true },
+					{ src: '../../plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../plugin/notes/notes.js', async: true },
+					{ src: '../../plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
