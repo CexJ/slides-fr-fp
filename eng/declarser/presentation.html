@@ -100,9 +100,9 @@
 						<h3>Naive approach in parsing</h3>
 						<p class="fragment fade-right">The naive approach to parsing an input: extracting and validating by hand the values, has some shortcomings:</p>
 						<ul>
-							<li class="fragment fade-right">Over complicated logic hard to refactor</li>
+							<li class="fragment fade-right">Hard to refactor, over complicated logic</li>
 							<li class="fragment fade-right">Hard to maintaining, input formats change often</li>
-							<li class="fragment fade-right">Ad hoc solution must be created for each entry: repeated code or unwanted dependencies</li>
+							<li class="fragment fade-right">Repeated code or unwanted dependencies, "ad-hoc" solutions</li>
 						</ul>
 					</section>
 					<section>
@@ -117,7 +117,7 @@
 					</section>
 					<section>
 						<h3>A more generalized approach</h3>
-						<p class="fragment fade-right">What has in particular a format from another?</p>
+						<p class="fragment fade-right">What is the difference between different formats?</p>
 						<p class="fragment fade-right">The idea is to create a framework that we can use to implement generalized parser for each kind of format we want</p>
 					</section>
 				</section>
@@ -131,12 +131,12 @@
 						<p class="fragment fade-right">This configuration is a description and it can take various form</p>
 					</section>
 					<section>
-						<img width="601" height="485" src="img/parser-algo.png" style="border:0px">
-					</section>
-					<section>
 						<h3>Declarative vs imperative</h3>
 						<p class="fragment fade-right">A description is by nature of declarative form since it declares some kind of shape</p>
 						<p class="fragment fade-right">In opposite of imperative style where we list the actions we need to follows to parse something</p>
+					</section>
+					<section>
+						<img width="601" height="485" src="img/parser-algo.png" style="border:0px">
 					</section>
 				</section>
 				<section>
