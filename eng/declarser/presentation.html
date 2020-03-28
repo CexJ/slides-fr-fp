@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Au-delà du lambda</title>
+		<title>Declarser</title>
 
 		<meta name="description" content="Declarser">
 		<meta name="author" content="Andrea Cesaro">
@@ -75,21 +75,21 @@
 			<div class="slides">
 				<section>
 					<h2>Declarser</h2>
-					<h5>A framework to build declarative parsers.</h5>
+					<h5>A framework to build declarative parsers</h5>
 					<p>
 						<small>Author <a href="http://cexj.github.io">Andrea Cesaro</a>, powered by: <a href="https://github.com/hakimel/reveal.js/">Reveal.js</a></small>
 					</p>
 				</section>
 
 				<section>
-					<h3>Index:</h3>
+					<h3>Index</h3>
 					<ul>
-						<li class="fragment fade-right">Motivations;</li>
+						<li class="fragment fade-right">Motivations</li>
 						<li class="fragment fade-right">What declarative means?</li>
 						<li class="fragment fade-right">What a parser is?</li>
-						<li class="fragment fade-right">Generalisation: the kernel framework;</li>
-						<li class="fragment fade-right">Implementation: the csv and mapper;</li>
-						<li class="fragment fade-right">Code analysis.</li>
+						<li class="fragment fade-right">Generalisation: the kernel framework</li>
+						<li class="fragment fade-right">Implementation: the csv and mapper</li>
+						<li class="fragment fade-right">Code analysis</li>
 					</ul>
 				</section>
 				<section>
@@ -100,9 +100,9 @@
 						<h3>Naive approach in parsing</h3>
 						<p class="fragment fade-right">The naive approach to parsing an input: extracting and validating by hand the values, has some shortcomings:</p>
 						<ul>
-							<li class="fragment fade-right">Over complicated logic hard to refactor.</li>
-							<li class="fragment fade-right">Hard to maintaining, input formats change often.</li>
-							<li class="fragment fade-right">Ad hoc solution must be created for each entry: repeated code or unwanted dependencies.</li>
+							<li class="fragment fade-right">Over complicated logic hard to refactor</li>
+							<li class="fragment fade-right">Hard to maintaining, input formats change often</li>
+							<li class="fragment fade-right">Ad hoc solution must be created for each entry: repeated code or unwanted dependencies</li>
 						</ul>
 					</section>
 					<section>
@@ -110,33 +110,33 @@
 					</section>
 					<section>
 						<h3>An abstract approach</h3>
-						<p class="fragment fade-right">For example, let suppose we need to parse various csv documents.</p>
-						<p class="fragment fade-right">With the naive approach we create an algorithm for each different kind of csv document.
-							A more abstract approach is to write an algorithm to read csv documents and to configure it for each document kind.</p>
+						<p class="fragment fade-right">For example, let suppose we need to parse various csv documents</p>
+						<p class="fragment fade-right">With the naive approach we create an algorithm for each different kind of csv document,
+							a more abstract approach is to write an algorithm to read csv documents and to configure it for each document kind.</p>
 						<p class="fragment fade-right">The idea is to refactor some commons pattern into some parser, an object that can be configured to parse any kind of csv.</p>
 					</section>
 					<section>
 						<h3>A more generalized approach</h3>
 						<p class="fragment fade-right">What has in particular a format from another?</p>
-						<p class="fragment fade-right">The idea is to create a framework that we can use to implement generalized parser for each kind of format we want.</p>
+						<p class="fragment fade-right">The idea is to create a framework that we can use to implement generalized parser for each kind of format we want</p>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h3>What declarative means?</h3>
+						<h2>What declarative means?</h2>
 					</section>
 					<section>
-						<h2>The ingredient for a parser</h2>
-						<p class="fragment fade-right">To make a parser works we need to configure it for the specific kind of input we want to parse.</p>
-						<p class="fragment fade-right">This configuration is a description and it can take various form.</p>
+						<h3>The ingredient for a parser</h3>
+						<p class="fragment fade-right">To make a parser works we need to configure it for the specific kind of input we want to parse</p>
+						<p class="fragment fade-right">This configuration is a description and it can take various form</p>
 					</section>
 					<section>
 						<img width="601" height="485" src="img/parser-algo.png" style="border:0px">
 					</section>
 					<section>
-						<h2>Declarative vs imperative</h2>
-						<p class="fragment fade-right">A description is by nature of declarative form since it declares some kind of shape.</p>
-						<p class="fragment fade-right">In opposite of imperative style where we list the actions we need to follows to parse something.</p>
+						<h3>Declarative vs imperative</h3>
+						<p class="fragment fade-right">A description is by nature of declarative form since it declares some kind of shape</p>
+						<p class="fragment fade-right">In opposite of imperative style where we list the actions we need to follows to parse something</p>
 					</section>
 				</section>
 				<section>
@@ -145,36 +145,36 @@
 					</section>
 					<section>
 						<h3>Example parsing csv</h3>
-						<p class="fragment fade-right">We start with an example: parsing a csv line.</p>
+						<p class="fragment fade-right">We start with an example: parsing a csv line</p>
 					</section>
 					<section data-transition="none">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage00.png" style="border:0px">
+						<img width="800" height="320" src="img/stages.png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage01.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(1).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage02.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(2).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage03.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(3).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage04.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(4).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage05.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(5).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage06.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(6).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage07.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(7).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage08.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(8).png" style="border:0px">
 					</section>
 				</section>
 				<section>
@@ -182,16 +182,19 @@
 						<h2>Generalisation: the kernel framework</h2>
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage09.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(9).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage10.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(10).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage11.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(11).png" style="border:0px">
 					</section>
 					<section data-transition="none">
-						<img width="800" height="320" src="img/stage12.png" style="border:0px">
+						<img width="800" height="320" src="img/stages(12).png" style="border:0px">
+					</section>
+					<section data-transition="none">
+						<img width="800" height="320" src="img/stages(13).png" style="border:0px">
 					</section>
 				</section>
 				<section>
@@ -211,11 +214,11 @@
 					</section>
 					<section>
 						<h3>Functional programming</h3>
-						<p class="fragment fade-right">The framework code follows the functional programming paradigm as far as it is possible.</p>
+						<p class="fragment fade-right">The framework code follows the functional programming paradigm as far as it is possible</p>
 					</section>
 					<section>
 						<h3>No exceptions</h3>
-						<p class="fragment fade-right">The framework avoid throwing exception, instead use the <b><i>Try</i></b> data structure.</p>
+						<p class="fragment fade-right">The framework avoid throwing exception, instead use the <b><i>Try</i></b> data structure</p>
 					</section>
 					<section>
 						<h3>Finite state machine</h3>
