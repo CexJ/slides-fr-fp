@@ -87,13 +87,13 @@
 						<li class="fragment fade-right">Cos'è git?</li>
 						<li class="fragment fade-right">Persistent List (parte I)</li>
 						<li class="fragment fade-right">Storicizzare i documenti, la master branch</li>
-						<li class="fragment fade-right">Demo LaTeX-VSCode (parte I)</li>
+						<li class="fragment fade-right">Demo (parte I)</li>
 						<li class="fragment fade-right">Persistent List (parte II)</li>
 						<li class="fragment fade-right">Versionamento dei documenti, le altre branch</li>
-						<li class="fragment fade-right">Demo LaTeX-VSCode (parte II)</li>
+						<li class="fragment fade-right">Demo (parte II)</li>
 						<li class="fragment fade-right">Persistent List (parte III)</li>
 						<li class="fragment fade-right">Decentralizzazione e collaborazione</li>
-						<li class="fragment fade-right">Demo LaTeX-VSCode-Github (parte III)</li>
+						<li class="fragment fade-right">Demo (parte III)</li>
 					</ul>
 				</section>
 
@@ -172,7 +172,7 @@
 					</section>
 					<section>
 						<p>Queste operazioni corrispono ad aggiungere un elemento ad una persistent list che prende il nome di <b>master branch</b></p>
-						<p class="fragment fade-right">Se si vuole ottenere una copia di un precedente elemento (commit) bisogna utilizzare il comando <code>git revert</code>, un successivo <code>git commit</code> lo renderà la versione corrente.</p>
+						<p class="fragment fade-right">Se si vuole ottenere una copia di un precedente elemento (commit) bisogna utilizzare il comando <code>git revert</code>.</p>
 					</section>
 				</section>
 				<section>
@@ -191,6 +191,92 @@
 					<section>
 						<h3>L'albero delle versioni</h3>
 						<p class="fragment fade-right">Questa struttura ci è utile per descrivere le diverse versioni di uno stesso documento che possono essere modificate in parallelo.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Versionamento dei documenti, le altre branch</h2>
+					</section>
+					<section>
+						<h3>Muoversi tra le branch</h3>
+						<p class="fragment fade-right">Per spostarsi da una branch all'altra bisogna utilizzare il comando <code>git checkout</code>.</p>
+						<p class="fragment fade-right">Nel caso in cui questa branch non esiste già verrà creata a partire dalla versione in cui si sta lavorando.</p>
+					</section>
+					<section>
+						<h3>Modificare il passato</h3>
+						<p class="fragment fade-right">Il comando <code>git checkout</code> può essere utilizzato per spostarsi su un commit preciso di una branch, ma se questo non è in posizione <code>head</code> non sarà possibile effettuare dei nuovi commit (bisogna ricordarsi che la nostra lista è immutabile e non possiamo cambiare il passato).</p>
+						<p class="fragment fade-right">Sarà però possibile creare una nuova branch, in questa branch saremo in posizione <code>head</code> e potremo dunque effettuare dei nuovi commit.</p>
+					</section>
+					<section>
+						<h3>L'avvantaggio delle versioni</h3>
+						<p class="fragment fade-right">Utilizzare diverse versioni e farle avanzare in parallelo è la funzionalità centrale di un gestore di versioni e permette d'aumentare considerevolmente la propria produttività.</p>
+						<p class="fragment fade-right">Per rendere veramente utilizzabile tale  funzione è però necessaria un'operazione particolare che permetta di riunificare due branch separate.</p>
+					</section>
+					<section>
+						<h3>Esempio</h3>
+						<p class="fragment fade-right">Supponiamo di lavorare su un documento, potremmo usare la branch master per gestire le versioni stabili.</p>
+						<p class="fragment fade-right">Ogni qualvolta volessimo modificare un capitolo potremmo aprire una nuova branch.</p>
+						<p class="fragment fade-right">In questo modo potremmo avere sempre una versione stabile (master) e varie versioni provvisorie su cui lavorare in parallelo.</p>
+						<p class="fragment fade-right">Una volta che avremo finito le modifiche sulle branch vorremmo riportarle sulla versione stabile (master).</p>
+					</section>
+					<section>
+						<h3>L'operazione merge</h3>
+						<p class="fragment fade-right">Per poter riportare le modifiche di una branch su un'altra utilizzeremo il comando <code>git merge</code>.</p>
+						<p class="fragment fade-right">Questa operazione sarà automatica se una delle due branch èun segmento dell'altra.</p>
+						<p class="fragment fade-right">Nel caso le due branch siano ben distinte l'operazione di merge potrebbe non essere risolvibile in modo automatico e ci troveremo in presenza di conflitti.</p>
+						<p class="fragment fade-right">Per poter terminare l'operazione di merge bisognerà risolvere questi conflitti e fare un commit di tale soluzione.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Persistent List (parte III)</h2>
+					</section>
+					<section>
+						<h3>Le liste persistente in un contesto concorrente</h3>
+						<p class="fragment fade-right">Una delle proprietà che derivano dall'imutabilità delle liste persistenti è la facilità con cui possono essere utilizzate in un contesto di calcolo concorrente.</p>
+					</section>
+					<section>
+						<p>Dati due attori che i due possono condividere una lista persistente su cui entrambi lavoreranno.</p>
+						<p class="fragment fade-right">Ogni operazione creerà una nuova lista, locale all'attore che l'ha compiuta, senza modificare la lista di partenza e quindi senza creare conflitti con il secondo attore.</p>
+						<p class="fragment fade-right">Queste strutture di dati possono essere utilizzate in un sistema distribuito, dove ogni nodo avrà una copia locale dell'albero delle versioni e delle operazioni simili ad un merge locale renderanno possible la sincronizzazione.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Decentralizzazione e collaborazione</h2>
+					</section>
+					<section>
+						<h3>Decentralizzazione</h3>
+						<p class="fragment fade-right">Git è un programma decentralizzato, il che implica che funziona in un cluster di nodi collegati tra loro.</p>
+						<p class="fragment fade-right">Ogni nodo ha una copia del repo git.</p>
+					</section>
+					<section>
+						<h3>Creazione di un nuovo nodo</h3>
+						<p class="fragment fade-right">Dato un nodo con un repo git un altro nodo potrà entrare a far parte del cluster utilizzando il comando <code>git clone</code>.</p>
+						<p class="fragment fade-right">Il repo git del nuovo nodo sarà inizializzato con la copia del repo git del nodo remoto indicato come parametro.</p>
+					</section>
+					<section>
+						<h3>Pull</h3>
+						<p class="fragment fade-right">Una volta in possesso di un repo git sarà possibile lavorarci localmente con le operazioni già citate.</p>
+						<p class="fragment fade-right">Per resincronizzare il repo locale con il repo git d'origine si potrà utilizzare il comando <code>git fetch</code>.</p>
+						<p class="fragment fade-right">Questo comando copierà il repo remoto nell'head.</p>
+						<p class="fragment fade-right">Per resincronizzare la workdirectory con il repo git d'origine si potrà utilizzare il comando <code>git pull</code>.</p>
+						<p class="fragment fade-right">Questo comando copierà il repo remoto nell'head ed eseguirà un merge con la workdirectory, se ci fossero dei conflitti per concludere il pull sarà necessario risolverli e di seguito eseguire un commit.</p>
+					</section>
+					<section>
+						<h3>Push</h3>
+						<p class="fragment fade-right">Se si vuole sincronizzare un nodo remodo con il proprio repo locale head si può utilizzare il comando <code>git push</code>.</p>
+						<p class="fragment fade-right">Questa operazione sarà bloccata in presenza di conflitti, bisognerà risolverli prima di poter completare l'operazione.</p>
+					</section>
+					<section>
+						<h3>Collaborazione</h3>
+						<p class="fragment fade-right">Git è un programma decentralizzato, ovvero non esiste il concetto di nodo master (server centrale) ma ogni nodo e pari agli altri.</p>
+						<p class="fragment fade-right">Questo è un modello molto più flessibile di quello centralizzato, che può essere simulato in un contesto decentralizzato eleggendo un nodo a master.</p>
+					</section>
+					<section>
+						<h3>GitHub</h3>
+						<p class="fragment fade-right">Una topologia classica è quella di utilizzare un repo remoto passivo come server centrale per sincronizzare diversi nodi.</p>
+						<p class="fragment fade-right">Ci sono vari siti/servizi online che permettono d'aver un repo git a tale scopo. Uno dei più utilizzati è github.</p>
 					</section>
 				</section>
 				<section>
