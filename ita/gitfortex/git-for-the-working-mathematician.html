@@ -88,10 +88,10 @@
 					<ul>
 						<li class="fragment fade-right">Cos'è <b>git</b>?</li>
 						<li class="fragment fade-right">Liste persistenti (parte I)</li>
-						<li class="fragment fade-right">Storicizzare i documenti, la master branch</li>
+						<li class="fragment fade-right">Storicizzazione</li>
 						<li class="fragment fade-right">Demo (parte I)</li>
 						<li class="fragment fade-right">Liste persistenti (parte II)</li>
-						<li class="fragment fade-right">Versionamento dei documenti, le altre branch</li>
+						<li class="fragment fade-right">Versionamento</li>
 						<li class="fragment fade-right">Demo (parte II)</li>
 						<li class="fragment fade-right">Liste persistenti (parte III)</li>
 						<li class="fragment fade-right">Decentralizzazione e collaborazione</li>
@@ -191,6 +191,12 @@
 				</section>
 				<section>
 					<section>
+						<h2>Demo (parte I)</h2>
+						<img class="fragment fade-right" width="300" height="auto" src="img/gitkraken.png" style="border:0px">
+					</section>
+				</section>
+				<section>
+					<section>
 						<h2>Liste persistenti (parte II)</h2>
 					</section>
 					<section>
@@ -209,7 +215,7 @@
 				</section>
 				<section>
 					<section>
-						<h2>Versionamento dei documenti</h2>
+						<h2>Versionamento</h2>
 					</section>
 					<section>
 						<h3>Le branch</h3>
@@ -233,14 +239,18 @@
 						<h3>Esempio</h3>
 						<p class="fragment fade-right">Supponiamo di lavorare su un documento, potremmo usare la branch master per gestire le versioni stabili.</p>
 						<p class="fragment fade-right">Ogni qualvolta volessimo modificare un capitolo potremmo aprire una nuova branch.</p>
-						<p class="fragment fade-right">In questo modo potremmo avere sempre una versione stabile (master) e varie versioni provvisorie su cui lavorare in parallelo.</p>
+					</section>
+					<section>
+						<p>In questo modo potremmo avere sempre una versione stabile (master) e varie versioni provvisorie su cui lavorare in parallelo.</p>
 						<p class="fragment fade-right">Una volta che avremo finito le modifiche sulle branch vorremmo riportarle sulla versione stabile (master).</p>
 					</section>
 					<section>
 						<h3>Merge</h3>
 						<p class="fragment fade-right">Per poter riportare le modifiche di una branch su un'altra utilizzeremo il comando <code>git merge</code>.</p>
 						<p class="fragment fade-right">Questa operazione sarà automatica se una delle due branch è contenuta nell'altra.</p>
-						<p class="fragment fade-right">Nel caso le due branch siano ben distinte l'operazione di merge potrebbe non essere risolvibile in modo automatico e ci troveremo in presenza di conflitti.</p>
+					</section>
+					<section>
+						<p>Nel caso le due branch siano ben distinte l'operazione di merge potrebbe non essere risolvibile in modo automatico e ci troveremo in presenza di conflitti.</p>
 						<p class="fragment fade-right">Per poter terminare l'operazione di merge bisognerà risolvere questi conflitti e fare un commit di tale soluzione.</p>
 					</section>
 					<section>
@@ -257,6 +267,10 @@
 					<section>
 						<p>Ci sono altri comandi con cui si può modificare l'abero delle versioni del local repository come <code>git rebase</code>, <code>git reset</code>, <code>git cherry-pick</code>, etc...</p>
 					</section>
+				</section>
+				<section>
+					<h2>Demo (parte II)</h2>
+					<img class="fragment fade-right" width="300" height="auto" src="img/gitkraken.png" style="border:0px">
 				</section>
 				<section>
 					<section>
@@ -287,11 +301,14 @@
 						<p class="fragment fade-right">Il local repository del nuovo nodo sarà inizializzato con la copia del local repository del nodo remoto indicato come parametro.</p>
 					</section>
 					<section>
-						<h3>Pull</h3>
+						<h3>Fetch</h3>
 						<p class="fragment fade-right">Una volta in possesso di un local repository sarà possibile lavorarci localmente con le operazioni già citate.</p>
 						<p class="fragment fade-right">Per resincronizzare il local repository con il repository d'origine si potrà utilizzare il comando <code>git fetch</code>.</p>
 						<p class="fragment fade-right">Questo comando copierà il repository remoto nell'<code>HEAD</code>.</p>
-						<p class="fragment fade-right">Per resincronizzare la work directory con il sitory d'origine si potrà utilizzare il comando <code>git pull</code>.</p>
+					</section>
+					<section>
+						<h3>Pull</h3>
+						<p class="fragment fade-right">Per resincronizzare la work directory con il repository d'origine si potrà utilizzare il comando <code>git pull</code>.</p>
 						<p class="fragment fade-right">Questo comando copierà il repository remoto nell'<code>HEAD</code> ed eseguirà un merge con la work directory, se ci fossero dei conflitti per concludere il pull sarà necessario risolverli e di seguito eseguire un commit.</p>
 					</section>
 					<section>
@@ -307,8 +324,15 @@
 					<section>
 						<h3>GitHub</h3>
 						<p class="fragment fade-right">Una topologia classica prevede l'utilizzo di un repository remoto passivo come server centrale per sincronizzare diversi nodi.</p>
-						<p class="fragment fade-right">Ci sono vari siti/servizi online che permettono d'aver un repo git a tale scopo. Uno dei più utilizzati è github.</p>
 					</section>
+					<section>
+						<p>Ci sono vari siti/servizi online che permettono d'aver un repo git a tale scopo. Uno dei più utilizzati è github.</p>
+						<img class="fragment fade-right" width="300" height="auto" src="img/octocat.png" style="border:0px">
+					</section>
+				</section>
+				<section>
+					<h2>Demo (parte III)</h2>
+					<img class="fragment fade-right" width="300" height="auto" src="img/gitkraken.png" style="border:0px">
 				</section>
 				<section>
 					<div class="row">
@@ -318,7 +342,15 @@
 						<div class="column">
 							<div class="vertical-center">
 								<div style="line-height: 200%"><small>
-									<div><b>Link:</b> <a href="https://cexj.github.io/slides/ita/gitfortex/git-for-the-working-mathematician.html">presentazione</a></div><br>
+									<div>
+										<b>Link:</b>
+										<ul style="list-style: none;">
+											<li><a href="https://git-scm.com/">git</a></li>
+											<li><a href="https://github.com/">github</a></li>
+											<li><a href="https://www.gitkraken.com/">gitkraken</a></li>
+											<li><a href="https://git-scm.com/book/en/v2">Pro git Book</a></li>
+										</ul>
+									</div>
 								</small></div>
 							</div>
 						</div>
