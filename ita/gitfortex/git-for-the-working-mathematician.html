@@ -80,26 +80,27 @@
 						<small>Autore <a href="http://cexj.github.io">Andrea Cesaro</a>, powered by: <a href="https://github.com/hakimel/reveal.js/">Reveal.js</a></small>
 					</p>
 				</section>
-
+				<section>
+					<img width="300" height="auto" src="img/xkcd.png" style="border:0px">
+				</section>
 				<section>
 					<h3>Indice</h3>
 					<ul>
-						<li class="fragment fade-right">Cos'è git?</li>
-						<li class="fragment fade-right">Persistent List (parte I)</li>
+						<li class="fragment fade-right">Cos'è <b>git</b>?</li>
+						<li class="fragment fade-right">Liste persistenti (parte I)</li>
 						<li class="fragment fade-right">Storicizzare i documenti, la master branch</li>
 						<li class="fragment fade-right">Demo (parte I)</li>
-						<li class="fragment fade-right">Persistent List (parte II)</li>
+						<li class="fragment fade-right">Liste persistenti (parte II)</li>
 						<li class="fragment fade-right">Versionamento dei documenti, le altre branch</li>
 						<li class="fragment fade-right">Demo (parte II)</li>
-						<li class="fragment fade-right">Persistent List (parte III)</li>
+						<li class="fragment fade-right">Liste persistenti (parte III)</li>
 						<li class="fragment fade-right">Decentralizzazione e collaborazione</li>
 						<li class="fragment fade-right">Demo (parte III)</li>
 					</ul>
 				</section>
-
 				<section>
 					<section>
-						<h2>Cos'è git?</h2>
+						<h2>Cos'è <b>git</b>?</h2>
 					</section>					
 					<section>
 						<h3>Wikipedia</h3>
@@ -107,16 +108,16 @@
 						<img class="fragment fade-right" width="300" height="auto" src="img/linus.jpg" style="border:0px">
 					</section>
 					<section>
-						<p>Si tratta di un software che gestisce automaticamente la storicizzazione ed il versionamento dei file contenuti in una cartella.</p>
+						<p>Si tratta di un software che gestisce automaticamente la storicizzazione ed il versionamento dei file contenuti in una cartella e permette la sincronizzazione con altre cartelle remote.</p>
 						<img class="fragment fade-right" width="300" height="auto" src="img/git.png" style="border:0px">
 					</section>
 				</section>
 				<section>
 					<section>
-						<h2>Persistent List (parte I)</h2>
+						<h2>Liste persistenti (parte I)</h2>
 					</section>
 					<section>
-						<h3>List</h3>
+						<h3>Liste</h3>
 						<p class="fragment fade-right">Per imparare ad usare <b>Git</b> bisogna capire che struttura di dati astratta utilizza al suo interno.</p>
 						<p class="fragment fade-right">Una lista è una sequenza finita, ordiata e omogenea di elementi.</p>
 						<p class="fragment fade-right">Ordinata: gli elementi sono ordinati con un indice.</p>
@@ -125,26 +126,26 @@
 					<section>
 						<p>In una normale lista possiamo:</p>
 						<ul>
-							<li class="fragment fade-right">Aggiungere un elemento in coda</li>
-							<li class="fragment fade-right">Leggere l'elemento all'indice <i>i</i></li>
-							<li class="fragment fade-right">Modificare l'elemento all'indice <i>i</i></li>
-							<li class="fragment fade-right">Eliminare l'elemento all'indice <i>i</i></li>
+							<li class="fragment fade-right">Aggiungere un elemento in testa,</li>
+							<li class="fragment fade-right">Leggere l'elemento all'indice <i>i</i>,</li>
+							<li class="fragment fade-right">Modificare l'elemento all'indice <i>i</i>,</li>
+							<li class="fragment fade-right">Eliminare l'elemento all'indice <i>i</i>.</li>
 						</ul>
 
 					</section>
 					<section>
-						<h3>Persistent</h3>
-						<p class="fragment fade-right">Una lista persistente le operazioni possibili sono solamente:</p>
+						<h3>Persistente</h3>
+						<p class="fragment fade-right">Una lista persistente è una lista con alcune limitazioni, le operazioni possibili sono solamente:</p>
 						<ul>
-							<li class="fragment fade-right">Aggiungere un elemento in coda</li>
-							<li class="fragment fade-right">Leggere l'elemento all'indice <i>i</i>, ottenendone una copia</li>
+							<li class="fragment fade-right">Ottenere una copia della lista,</li>
+							<li class="fragment fade-right">Ottenere una copia della lista con un elemento aggiunto in testa,</li>
+							<li class="fragment fade-right">ottenendone una copia dell'elemento all'indice <i>i</i>.</li>
 						</ul>
 					</section>
 					<section>
 						<h3>Storicizzazione</h3>
-						<p class="fragment fade-right">Per la storicizzazione le liste persistenti sono ottime, le passate versioni non devono mai essere modificate.</p>
-						<p class="fragment fade-right">L'elemento in coda rappresenta l'elemento attivo.</p>
-						<p class="fragment fade-right">Se si vuole ritornare ad una versione precedente d'indice <i>i</i> basta leggere l'elemento e aggiungerlo alla coda della lista.</p>
+						<p class="fragment fade-right">Le liste persistenti sono ottime per rappresentare la storicizzazione, il passato deve restare immutabile.</p>
+						<p class="fragment fade-right">L'elemento in testa rappresenta l'ultima versione.</p>
 					</section>
 					<section>
 						<h3>Puramente funzionale</h3>
@@ -158,26 +159,39 @@
 
 				<section>
 					<section>
-						<h2>Storicizzare i documenti</h2>
+						<h2>Primi passi con <b>git</b></h2>
 					</section>
 					<section>
-						<h3>La branch master</h3>
-						<p class="fragment fade-right">Git lavora con le cartelle, data una cartella potrà gestirà il versionamento dei file presenti in una cartella (ed in tutto l'albero delle sotto cartele).</p>
-						<p class="fragment fade-right">Una volta installato git l'operazione per fargli gestire una cartella è <code>git init</code>, la cartella ed i suoi file rimarranno invariati e funzioneranno come prima, l'unica differenza sarà la creazione di un file .git</p>
+						<h3>Gestire una cartella con <b>git</b></h3>
+						<p class="fragment fade-right">Il primo comando per far gestire una cartella a <b>git</b> è <code>git init</code>.</p>
 					</section>
 					<section>
-						<p>La creazione, la modifica o il salvataggio di un file non implicano automaticamente un versionalento di git. Questo deve essere domandato esplicitamente.</p>
-						<p class="fragment fade-right">Se si crea un file che si vuol far gestire da git bisogna utilizzare il comando <code>git add</code></p>
-						<p class="fragment fade-right">Se si modifica o elimina un file gestito da git e si vuole storicizzare tale cambiamento bisogna utilizzare il comando <code>git commit</code>, aggiungendo un messaggio per indicare la motivazione di tale cambiamento.</p>
+						<h3>Local repository, index e working directory</h3>
+						<p class="fragment fade-right"><b>Git</b> è composto da tre strutture: un local repository, un index e una working directory.</p>
 					</section>
 					<section>
-						<p>Queste operazioni corrispono ad aggiungere un elemento ad una persistent list che prende il nome di <b>master branch</b></p>
-						<p class="fragment fade-right">Se si vuole ottenere una copia di un precedente elemento (commit) bisogna utilizzare il comando <code>git revert</code>.</p>
+						<h3>Local repository</h3>
+						<p class="fragment fade-right">Si tratta di una collezione di liste persistentie che rappresenta lo storico del passato, è immutabile e l'elemento <code>HEAD</code> rappresenta l'ultima versione storicizzata della lista persistente selezionata.</p>
+						<p class="fragment fade-right">Per il momento consideremo che la collezione di liste persistenti sia composta solo da una lista che chiameremo branch master, vedremo in seguito come aggiungerne altre</p>
+					</section>
+					<section>
+						<h3>Working directory</h3>
+						<p class="fragment fade-right">Si tratta della cartella in cui lavoriamo, rappresenta il futuro possiamo modificarla come vogliamo.</p>
+					</section>
+					<section>
+						<h3>Index</h3>
+						<p class="fragment fade-right">Si tratta di una lista di cambiamenti rispetto a <code>HEAD</code>, rappresenta il presente ed è usata da <b>git</b> per preparare il prossimo elemento da aggiungere al local repository.</p>
+					</section>
+					<section>
+						<h3>Add e commit</h3>
+						<p class="fragment fade-right">Per passare dei file dalla working direcotory all'index bisogna usare il comando <code>git add</code>.</p>
+						<p class="fragment fade-right">Per passare dei file dall'index al local repository bisogna usare il comando <code>git commit</code>.</p>
+						<p class="fragment fade-right">Una volta eseguito un <code>git commit</code> la local repository sarà aggiornata con la nuova lista persistente creata.</p>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h2>Persistent List (parte II)</h2>
+						<h2>Liste persistenti (parte II)</h2>
 					</section>
 					<section>
 						<h3>Una lista è un ramo di un albero</h3>
@@ -186,7 +200,7 @@
 					</section>
 					<section>
 						<p>Se aggiungiamo un altro elemento a \(l\) una nuova lista \(l_2\).</p>
-						<p class="fragment fade-right">Le liste \(l_1\), \(l_2\) e tutte coloro che creeremo aggiungendo nuovi elementi sono tutte diverse ma condividono il segmento \(l\), sono i rami di un albero.</p>
+						<p class="fragment fade-right">Le liste \(l_1\), \(l_2\) e tutte coloro che creeremo aggiungendo nuovi elementi sono tutte diverse ma condividono il segmento \(l\).</p>
 					</section>
 					<section>
 						<h3>L'albero delle versioni</h3>
@@ -195,22 +209,25 @@
 				</section>
 				<section>
 					<section>
-						<h2>Versionamento dei documenti, le altre branch</h2>
+						<h2>Versionamento dei documenti</h2>
 					</section>
 					<section>
-						<h3>Muoversi tra le branch</h3>
+						<h3>Le branch</h3>
+						<p class="fragment fade-right"><b>Git</b> rappresenta delle diverse liste persistenti con delle strutture chiamate branch.</p>
+					</section>
+					<section>
+						<h3>Checkout (parte I)</h3>
 						<p class="fragment fade-right">Per spostarsi da una branch all'altra bisogna utilizzare il comando <code>git checkout</code>.</p>
-						<p class="fragment fade-right">Nel caso in cui questa branch non esiste già verrà creata a partire dalla versione in cui si sta lavorando.</p>
+						<p class="fragment fade-right">Il comando <code>git checkout</code> ci permette di posizionarci su un qualsiasi commit, se non specifichiamo quale sarà selezionato <code>HEAD</code>.</p>
 					</section>
 					<section>
-						<h3>Modificare il passato</h3>
-						<p class="fragment fade-right">Il comando <code>git checkout</code> può essere utilizzato per spostarsi su un commit preciso di una branch, ma se questo non è in posizione <code>head</code> non sarà possibile effettuare dei nuovi commit (bisogna ricordarsi che la nostra lista è immutabile e non possiamo cambiare il passato).</p>
-						<p class="fragment fade-right">Sarà però possibile creare una nuova branch, in questa branch saremo in posizione <code>head</code> e potremo dunque effettuare dei nuovi commit.</p>
+						<h3>Checkout (parte II)</h3>
+						<p class="fragment fade-right">Per creare una branch bisogna utilizzare il comando <code>git checkout</code>.</p>
 					</section>
 					<section>
 						<h3>L'avvantaggio delle versioni</h3>
-						<p class="fragment fade-right">Utilizzare diverse versioni e farle avanzare in parallelo è la funzionalità centrale di un gestore di versioni e permette d'aumentare considerevolmente la propria produttività.</p>
-						<p class="fragment fade-right">Per rendere veramente utilizzabile tale  funzione è però necessaria un'operazione particolare che permetta di riunificare due branch separate.</p>
+						<p class="fragment fade-right">Utilizzare diverse versioni e farle avanzare in parallelo è la funzionalità centrale di un sistema di controllo di versioni e permette d'aumentare considerevolmente la propria produttività.</p>
+						<p class="fragment fade-right">Per rendere veramente utilizzabile tale funzione è però necessaria un'operazione particolare che permetta di riunificare due branch separate.</p>
 					</section>
 					<section>
 						<h3>Esempio</h3>
@@ -220,16 +237,30 @@
 						<p class="fragment fade-right">Una volta che avremo finito le modifiche sulle branch vorremmo riportarle sulla versione stabile (master).</p>
 					</section>
 					<section>
-						<h3>L'operazione merge</h3>
+						<h3>Merge</h3>
 						<p class="fragment fade-right">Per poter riportare le modifiche di una branch su un'altra utilizzeremo il comando <code>git merge</code>.</p>
-						<p class="fragment fade-right">Questa operazione sarà automatica se una delle due branch èun segmento dell'altra.</p>
+						<p class="fragment fade-right">Questa operazione sarà automatica se una delle due branch è contenuta nell'altra.</p>
 						<p class="fragment fade-right">Nel caso le due branch siano ben distinte l'operazione di merge potrebbe non essere risolvibile in modo automatico e ci troveremo in presenza di conflitti.</p>
 						<p class="fragment fade-right">Per poter terminare l'operazione di merge bisognerà risolvere questi conflitti e fare un commit di tale soluzione.</p>
+					</section>
+					<section>
+						<h3>Revert</h3>
+						<p class="fragment fade-right">Come già detto il local repository è immutabile, non possiamo modificare il passato.</p>
+						<p class="fragment fade-right">L'operazione <code>git revert</code> ci dona una soluzione per simulare un viaggio nel tempo.</p>
+						<p class="fragment fade-right">Il passato non verrà cancellato ma un nuovo elemento verrà aggiunto in testa.</p>
+						<p class="fragment fade-right">Le differenze tra <code>HEAD</code> ed il commit selezionato saranno considerate dei conflitti a risolvere prima di poter effettuare il commit.</p>
+					</section>
+					<section>
+						<h3>Diff</h3>
+						<p class="fragment fade-right">Il comando <code>git diff</code> è utile per visualizzare le differenze tra differenti commit, branch, index...</p>
+					</section>
+					<section>
+						<p>Ci sono altri comandi con cui si può modificare l'abero delle versioni del local repository come <code>git rebase</code>, <code>git reset</code>, <code>git cherry-pick</code>, etc...</p>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h2>Persistent List (parte III)</h2>
+						<h2>Liste persistenti (parte III)</h2>
 					</section>
 					<section>
 						<h3>Le liste persistente in un contesto concorrente</h3>
@@ -247,35 +278,35 @@
 					</section>
 					<section>
 						<h3>Decentralizzazione</h3>
-						<p class="fragment fade-right">Git è un programma decentralizzato, il che implica che funziona in un cluster di nodi collegati tra loro.</p>
-						<p class="fragment fade-right">Ogni nodo ha una copia del repo git.</p>
+						<p class="fragment fade-right"><b>Git</b> è un programma decentralizzato, il che implica che funziona in un cluster di nodi collegati tra loro.</p>
+						<p class="fragment fade-right">Ogni nodo ha un proprio local repository.</p>
 					</section>
 					<section>
 						<h3>Creazione di un nuovo nodo</h3>
-						<p class="fragment fade-right">Dato un nodo con un repo git un altro nodo potrà entrare a far parte del cluster utilizzando il comando <code>git clone</code>.</p>
-						<p class="fragment fade-right">Il repo git del nuovo nodo sarà inizializzato con la copia del repo git del nodo remoto indicato come parametro.</p>
+						<p class="fragment fade-right">Dato un nodo con un repo <b>git</b> un altro nodo potrà entrare a far parte del cluster utilizzando il comando <code>git clone</code>.</p>
+						<p class="fragment fade-right">Il local repository del nuovo nodo sarà inizializzato con la copia del local repository del nodo remoto indicato come parametro.</p>
 					</section>
 					<section>
 						<h3>Pull</h3>
-						<p class="fragment fade-right">Una volta in possesso di un repo git sarà possibile lavorarci localmente con le operazioni già citate.</p>
-						<p class="fragment fade-right">Per resincronizzare il repo locale con il repo git d'origine si potrà utilizzare il comando <code>git fetch</code>.</p>
-						<p class="fragment fade-right">Questo comando copierà il repo remoto nell'head.</p>
-						<p class="fragment fade-right">Per resincronizzare la workdirectory con il repo git d'origine si potrà utilizzare il comando <code>git pull</code>.</p>
-						<p class="fragment fade-right">Questo comando copierà il repo remoto nell'head ed eseguirà un merge con la workdirectory, se ci fossero dei conflitti per concludere il pull sarà necessario risolverli e di seguito eseguire un commit.</p>
+						<p class="fragment fade-right">Una volta in possesso di un local repository sarà possibile lavorarci localmente con le operazioni già citate.</p>
+						<p class="fragment fade-right">Per resincronizzare il local repository con il repository d'origine si potrà utilizzare il comando <code>git fetch</code>.</p>
+						<p class="fragment fade-right">Questo comando copierà il repository remoto nell'<code>HEAD</code>.</p>
+						<p class="fragment fade-right">Per resincronizzare la work directory con il sitory d'origine si potrà utilizzare il comando <code>git pull</code>.</p>
+						<p class="fragment fade-right">Questo comando copierà il repository remoto nell'<code>HEAD</code> ed eseguirà un merge con la work directory, se ci fossero dei conflitti per concludere il pull sarà necessario risolverli e di seguito eseguire un commit.</p>
 					</section>
 					<section>
 						<h3>Push</h3>
-						<p class="fragment fade-right">Se si vuole sincronizzare un nodo remodo con il proprio repo locale head si può utilizzare il comando <code>git push</code>.</p>
-						<p class="fragment fade-right">Questa operazione sarà bloccata in presenza di conflitti, bisognerà risolverli prima di poter completare l'operazione.</p>
+						<p class="fragment fade-right">Se si vuole sincronizzare un nodo remodo con il proprio repository locale si può utilizzare il comando <code>git push</code>.</p>
+						<p class="fragment fade-right">Questa operazione sarà bloccata in presenza di conflitti, bisognerà risolverli tramite un <code>git pull</code> prima di poter completare l'operazione.</p>
 					</section>
 					<section>
 						<h3>Collaborazione</h3>
-						<p class="fragment fade-right">Git è un programma decentralizzato, ovvero non esiste il concetto di nodo master (server centrale) ma ogni nodo e pari agli altri.</p>
+						<p class="fragment fade-right"><b>Git</b> è un programma decentralizzato, ovvero non esiste il concetto di nodo master (server centrale) ma ogni nodo e pari agli altri.</p>
 						<p class="fragment fade-right">Questo è un modello molto più flessibile di quello centralizzato, che può essere simulato in un contesto decentralizzato eleggendo un nodo a master.</p>
 					</section>
 					<section>
 						<h3>GitHub</h3>
-						<p class="fragment fade-right">Una topologia classica è quella di utilizzare un repo remoto passivo come server centrale per sincronizzare diversi nodi.</p>
+						<p class="fragment fade-right">Una topologia classica prevede l'utilizzo di un repository remoto passivo come server centrale per sincronizzare diversi nodi.</p>
 						<p class="fragment fade-right">Ci sono vari siti/servizi online che permettono d'aver un repo git a tale scopo. Uno dei più utilizzati è github.</p>
 					</section>
 				</section>
