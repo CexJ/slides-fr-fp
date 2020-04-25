@@ -51,6 +51,12 @@
   				-ms-transform: translateY(-50%);
 			  	transform: translateY(-50%);
 			}
+
+			section.fig-container {
+                width: 100%;
+                height: 100%;
+            }
+
 		</style>
 
 		<!-- Printing and PDF exports -->
@@ -147,6 +153,11 @@
 						<p class="fragment fade-right">Le liste persistenti sono ottime per rappresentare la storicizzazione, il passato deve restare immutabile.</p>
 						<p class="fragment fade-right">L'elemento in testa rappresenta l'ultima versione.</p>
 					</section>
+					<section class="fig-container"
+							 data-fig-id="fig-persistent-list"
+							 data-file="diagrams/persistent-list.html">
+						<h2>Liste persistenti</h2>
+					</section>
 					<section>
 						<h3>Puramente funzionale</h3>
 						<p class="fragment fade-right">Come vedremo in seguito è importante capire che queste liste sono puramente funzionali.</p>
@@ -156,7 +167,6 @@
 						<p>In una lista puramente funzionale le operazioni sono funzioni che creano una nuova lista: se ho una lista \(l_1\) di \(n\) elementi, se invoco la funzione per eliminarne uno otterrò una nuova lista \(l_2\) con \(n-1\) elementi, mentre la prima lista \(l_1\) resterà invariata.</p>
 					</section>
 				</section>
-
 				<section>
 					<section>
 						<h2>Primi passi con <b>git</b></h2>
@@ -188,6 +198,9 @@
 						<p class="fragment fade-right">Per passare dei file dall'index al local repository bisogna usare il comando <code>git commit</code>.</p>
 						<p class="fragment fade-right">Una volta eseguito un <code>git commit</code> la local repository sarà aggiornata con la nuova lista persistente creata.</p>
 					</section>
+				</section>
+				<section>
+					<img src="img/git_local.png" style="border:0px">
 				</section>
 				<section>
 					<section>
@@ -249,6 +262,11 @@
 						<p class="fragment fade-right">Per poter riportare le modifiche di una branch su un'altra utilizzeremo il comando <code>git merge</code>.</p>
 						<p class="fragment fade-right">Questa operazione sarà automatica se una delle due branch è contenuta nell'altra.</p>
 					</section>
+					<section class="fig-container"
+							 data-fig-id="fig-branch-merge"
+							 data-file="diagrams/branch-merge.html">
+						<h2>Merge</h2>
+					</section>
 					<section>
 						<p>Nel caso le due branch siano ben distinte l'operazione di merge potrebbe non essere risolvibile in modo automatico e ci troveremo in presenza di conflitti.</p>
 						<p class="fragment fade-right">Per poter terminare l'operazione di merge bisognerà risolvere questi conflitti e fare un commit di tale soluzione.</p>
@@ -267,6 +285,9 @@
 					<section>
 						<p>Ci sono altri comandi con cui si può modificare l'abero delle versioni del local repository come <code>git rebase</code>, <code>git reset</code>, <code>git cherry-pick</code>, etc...</p>
 					</section>
+				</section>
+				<section>
+					<img src="img/git_branch.png" style="border:0px">
 				</section>
 				<section>
 					<h2>Demo (parte II)</h2>
@@ -296,14 +317,18 @@
 						<p class="fragment fade-right">Ogni nodo ha un proprio local repository.</p>
 					</section>
 					<section>
-						<h3>Creazione di un nuovo nodo</h3>
+						<h3>Clone</h3>
 						<p class="fragment fade-right">Dato un nodo con un repo <b>git</b> un altro nodo potrà entrare a far parte del cluster utilizzando il comando <code>git clone</code>.</p>
-						<p class="fragment fade-right">Il local repository del nuovo nodo sarà inizializzato con la copia del local repository del nodo remoto indicato come parametro.</p>
+						<p class="fragment fade-right">Il local repository del nuovo nodo sarà inizializzato con la copia del local repository del nodo remoto indicato come parametro e delle branch, per ogni branch sarà inizializzata anche una branch <code>origin</code> il cui compito è quello di rappresentare lo stato delle branch remote.</p>
+					</section>
+					<section>
+						<h3>Fetch</h3>
+						<p class="fragment fade-right">Per sincronizzare le branch <code>origin</code> con il repository remoto bisogna utilizzare il comando <code>git fetch</code>.</p>
 					</section>
 					<section>
 						<h3>Pull</h3>
-						<p class="fragment fade-right">Per resincronizzare la work directory con il repository d'origine bisogna utilizzare il comando <code>git pull</code>.</p>
-						<p class="fragment fade-right">Questo comando copierà il repository remoto nell'<code>HEAD</code> ed eseguirà un merge con la work directory, se ci fossero dei conflitti per concludere il pull sarà necessario risolverli e di seguito eseguire un commit.</p>
+						<p class="fragment fade-right">Per sincronizzare la branch a cui sta puntando la working directory con il repository remoto bisogna utilizzare il comando <code>git pull</code>.</p>
+						<p class="fragment fade-right">Questo comando sincronizzerà la branch <code>origin</code> ed eseguirà un merge con la working directory per mettere a giorno la branch locale, se ci fossero dei conflitti per concludere il pull sarà necessario risolverli e di seguito eseguire un commit.</p>
 					</section>
 					<section>
 						<h3>Push</h3>
@@ -323,6 +348,9 @@
 						<p>Ci sono vari siti/servizi online che permettono d'aver un repo git a tale scopo. Uno dei più utilizzati è github.</p>
 						<img class="fragment fade-right" width="300" height="auto" src="img/octocat.png" style="border:0px">
 					</section>
+				</section>
+				<section>
+					<img src="img/git_remote.png" style="border:0px">
 				</section>
 				<section>
 					<h2>Demo (parte III)</h2>
@@ -355,6 +383,7 @@
 
 		</div>
 
+		<script src="../../lib/js/head.min.js"></script>
 		<script src="../../js/reveal.js"></script>
 
 		<script>
@@ -387,6 +416,8 @@
 					{ src: '../../plugin/search/search.js', async: true },
 					{ src: '../../plugin/zoom-js/zoom.js', async: true },
 					{ src: '../../plugin/notes/notes.js', async: true },
+					{ src: 'https://d3js.org/d3.v4.min.js' },
+                    { src: '../../plugin/d3js/d3js.js' },
 					{ src: '../../plugin/math/math.js', async: true }
 				]
 			});
