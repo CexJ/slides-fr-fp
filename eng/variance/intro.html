@@ -1,0 +1,385 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/sky.css" id="theme">
+
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+
+		<style>
+			.container{
+				display: flex;
+			}
+			.col{
+				flex: 1;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>An introduction to variance in Scala</h2>
+
+					<p>Powered by <a href="https://revealjs.com/">reveal.JS</a> and \( \LaTeX \)</p>
+				</section>
+				<section>
+					<h2>Table of content:</h2>
+					<ul>
+						<li>Polymorphism</li>
+						<li>Existential types</li>
+						<li>Variance</li>
+					</ul> 
+				</section>
+				<section>
+					<h2>Notation:</h2>
+					<div class="container">
+						<div class="col">
+							<pre><code class="Scala" data-trim data-noescape>
+								trait A
+								trait B
+								val f: A => B
+							</code></pre>
+						</div>
+						<div class="col">
+							\[ A \xrightarrow[]{f} B \]
+						</div>
+					</div>
+					<div class="container">
+						<div class="col">
+							<pre><code class="Scala" data-trim data-noescape>
+								val f: A => B
+								val g: B => C
+								val h: A => C = g(f(_))
+							</code></pre>
+						</div>
+						<div class="col">
+							\[ A \xrightarrow[]{f} B \xrightarrow[]{g} C \]
+						</div>	
+					</div>
+					<div class="container">
+						<div class="col">
+							<pre><code class="Scala" data-trim data-noescape>
+								trait A
+								trait B
+								A extends B
+							</code></pre>
+						</div>
+						<div class="col">
+							\[ A \hookrightarrow B\]
+						</div>	
+					</div>
+					<p>
+						<pre><code class="Scala" data-trim data-noescape>
+							A extends B
+							val inc: A => B = x => x
+						</code></pre>
+					</p>
+				</section>
+				<section> 
+					<section>
+						<h2>Polymorphism</h2>
+					</section>
+					<section>
+						<p>There are three types of polymorphism:</p>
+						<ul>
+							<li>Subtyping,</li>
+							<li>Parametric,</li>
+							<li>Ad-hoc.</li>
+						</ul>
+					</section>
+					<section>
+						<p>Today we will discuss the interactions between subtype and parametric polymorphism.</p>
+						<p>Let \( Gen[T]\) be a genetic type and \( A \hookrightarrow B \), is it always true that \( Gen[A] \hookrightarrow Gen[B] \) ?</p>
+						<p>We call this property <i>covariance</i>.</p>
+					</section>
+					<section>
+						<h3>Problem 1:</h3>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Animal
+							trait Cat extends Animal
+							trait Dog extends Animal
+							trait Herd[T] {
+								def add(newAnimal: T): Unit
+							}
+						</code></pre>
+						<pre><code class="Scala" data-trim data-noescape>
+							def addDog(animals: Herd[Animal]): Unit =
+								animals.add(Dog()) 
+						</code></pre>
+						<p>If \( Herd[Cat] \hookrightarrow Herd[Animal] \) then the following code should compile:</p>
+						<pre><code class="Scala" data-trim data-noescape>
+							addDog(Herd[Cat]())
+						</code></pre>
+						<p>We need to work with immutable data structure.</p>
+					</section>
+					<section>
+						<h3>Problem 2:</h3>
+						<pre><code class="Scala" data-trim data-noescape>
+							class Medicine[T]
+						</code></pre>
+						<p>It is quite obvious that in this model we want \( Medicine[Animal] \hookrightarrow Medicine[Cat] \).</p>
+						<p>We call this property contraviariance.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Solution 1: Existential types</h2>
+					</section>
+					<section>
+						<p>Let \( Gen[T]\) be a genetic type and \( A \hookrightarrow B \), we so not impose any relationship between \( Gen[A]\) and \( Gen[B]\) but we use the wildcard \( \_ \) to take care of types' hierarchy.</p>
+					</section>
+					<section>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Herd[T] {
+								def add[V &gt;: T](newAnimal: V): Herd[V]
+							}
+
+							def addDog(animals: Herd[_ &lt;: Dog]): Herd[Dog] =
+								animals.add(Dog())
+						</code></pre>
+						<p>This solution is very flexible but it is very hard to use.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Solution 2: Variance</h2>
+					</section>
+					<section>
+						<p>We impose the type of variance at generic type definition</p>
+						<ul>
+							<li>\( Gen[+T] \) for covariant</li>
+							<li>\( Gen[-T] \) for contravariant</li>
+							<li>\( Gen[T] \) for invariant</li>
+						</ul>
+						<p>The covariant and contravariant definition implies some contrains on methods' definitions.</p>
+					</section>
+					<section>
+						This solution has the advantage to be very easy to use, pushing the contraints to the API definition instead of the client. It is less flexible than the previous one but in some cases the choice of variance is natural and we are not losing generality.
+					</section>
+					<section>
+						<h3>Properties</h3>
+					</section>
+					<section>
+						Given:
+						<pre><code class="Scala" data-trim data-noescape>
+							trait B
+							trait A extends B
+							trait Cov[+T]
+							trait Con[-T]
+							trait Inv[T]
+						</code></pre>
+						then we have the following 
+						<div class="container">
+							<div class="col">
+								\[ Cov[Cov[A]] \hookrightarrow Cov[Cov[B]] \]
+								\[ Con[Con[A]] \hookrightarrow Con[Con[B]] \]
+								\[ Cov[Con[A]] \hookleftarrow Cov[Con[B]] \]
+								\[ Con[Cov[A]] \hookleftarrow Con[Cov[B]] \]
+							</div>
+							<div class="col">
+								\[ + \circ + \rightsquigarrow + \]
+								\[ - \circ - \rightsquigarrow + \]
+								\[ + \circ - \rightsquigarrow - \]
+								\[ - \circ + \rightsquigarrow - \]
+							</div>
+						</div>
+					</section>
+					<section>
+						<p>Any composition with \( Inv[T] \) is invariant.</p>
+						<div class="col">
+							\[ + \circ 0 \rightsquigarrow 0 \]
+							\[ 0 \circ + \rightsquigarrow 0 \]
+							\[ - \circ 0 \rightsquigarrow 0 \]
+							\[ 0 \circ - \rightsquigarrow 0 \]
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>The identity generic type \(Id[+T]\) is covariant.</li>
+							<li>The \(Function1[-A,+B]\) is contravariant in the first parameter and covariant in the second parameter.</li>
+						</ul>
+					</section>
+					<section>
+						<p>Let \( A \), \( B \), and \( C \) be three types where \(B \hookrightarrow C \), then foreach \( A \xrightarrow[]{f} B \) we implicitly have \( A \xrightarrow[]{f} B \hookrightarrow C \).</p>
+						<p>\[ Function1[A, B] \hookrightarrow Function1[A, C] \]</p>
+					</section>
+					<section>
+						<p>Let \( X \), \( Y \), and \( Z \) be three types where \(X \hookrightarrow Y \), then foreach \( Y \xrightarrow[]{g} Z \) we implicitly have \( X \hookrightarrow Y \xrightarrow[]{g} Z \).</p>
+						<p>\[ Function1[X, Z] \hookleftarrow Function1[Y, Z] \]</p>
+					</section>
+					<section>
+						<h3>Contraints</h3>
+					</section>
+					<section>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Cov[+T] {
+								def covMeth(t: T): Unit
+							}							
+						</code></pre>
+						It does not compile because:
+						<pre><code class="console" data-trim data-noescape>
+							covariant type T occurs in contravariant position 
+							in type T of value t
+						</code></pre>
+					</section>
+					<section>
+						<h3>Example</h3>
+						<pre><code class="Scala" data-trim data-noescape>
+							def addDog(animals: Herd[Animals]): Herd[Animals] {
+								animals.add(Dog())
+							}
+							
+							addDog(Herd[Cat]())
+						</code></pre>
+					</section>
+					<section>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Con[-T] {
+								def conMeth(): T
+							}							
+						</code></pre>
+						It does not compile because:
+						<pre><code class="console" data-trim data-noescape>
+							contravariant type T occurs in covariant position 
+							in type (): T of method conMeth
+						</code></pre>
+					</section>
+					<section>
+						Any use of \( Inv[T] \) in a method of \( Con[+T] \) or \( Cov[-T] \) does not compile with similar errors.
+					</section>
+					<section>
+						<h3>Currying</h3>
+						<div class="container">
+							<div class="col">
+								\[ (A, B) \Rightarrow C \]
+							</div>
+							<div class="col"> 
+								\[\simeq\] 
+							</div>
+							<div class="col">
+								\[A \Rightarrow (B \Rightarrow C) \]
+							</div>
+						</div>
+						<div class="container">
+							<div class="col">
+								<pre><code class="Scala" data-trim data-noescape>def covMeth[V](t: T): Unit </code></pre>
+							</div>
+							<div class="col">
+								<pre><code class="Scala" data-trim data-noescape>def covMeth[V](): T => Unit </code></pre>
+							</div>
+						</div>
+						<div class="container">
+							<div class="col">
+								<pre><code class="Scala" data-trim data-noescape>def conMeth(): T </code></pre>
+							</div>
+							<div class="col">
+								<pre><code class="Scala" data-trim data-noescape>def conMeth(): Unit => T </code></pre>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>Variance inconsistency</h3>
+						<div class="container">
+							<div class="col">
+								\[ Cov[+T] \]
+							</div>
+							<div class="col"> 
+								\[\overset{covMeth}{\longrightarrow}\] 
+							</div>
+							<div class="col">
+								\[ Functin1[-T, Unit] \]
+							</div>
+						</div>
+						<div class="container">
+							<div class="col">
+								\[ Con[-T] \]
+							</div>
+							<div class="col"> 
+								\[\overset{conMeth}{\longrightarrow}\] 
+							</div>
+							<div class="col">
+								\[ Functin1[Unit, +T] \]
+							</div>
+						</div>
+					</section>
+					<section>
+						<h3>Exercise:</h3>
+						<p>Does this code compile?</p>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Con[-T] {
+								def conMeth(v: Cov[Con[Con[T]]]): Cov[Cov[Con[T]]]
+							}							
+						</code></pre>
+						\[ Con[-T] \]
+						\[\overset{conMeth}{\longrightarrow}\] 
+						\[ Functin1[Cov[Con[Con[T]]], Cov[Cov[Con[T]]]] \]
+					</section>
+					<section>
+						<h2>Magic tricks</h2>
+					</section>
+					<section>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Cov[+T] {
+								def covMeth[W &gt;: T](w: W): Unit
+							}							
+						</code></pre>
+						<p>It compiles.</p>
+						<pre><code class="Scala" data-trim data-noescape>
+							trait Con[-T] {
+								def conMeth[W &lt;: T](): W
+							}							
+						</code></pre>
+						<p>It compiles.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Conclusions</h2>
+					</section>
+					<section>
+						<p>Use a covariant or contravariant generic type it is easy and intuitive but define one can be tricky.</p>
+						<p>Decide the variance of a generic type implies several contraints and it should be avoided if not necessary or if there is no an bovious and natural choice.</p>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+		<script src="../../plugin/math/math.js"></script>
+		<script>
+		  Reveal.initialize({
+			math: {
+			  mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+			  config: 'TeX-AMS_HTML-full',
+			  // pass other options into `MathJax.Hub.Config()`
+			  TeX: { Macros: { RR: "{\\bf R}" } }
+			},
+			plugins: [ RevealMath ]
+		  });
+		</script>
+	</body>
+</html>
